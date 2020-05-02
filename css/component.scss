@@ -1,0 +1,45 @@
+//fragment
+$canvas_color: linear-gradient(45deg, rgba(0, 205, 0, .6), rgba(255, 255, 255, .5));
+$canvas_deg_gap: 180;
+$frag_size: 50px;
+
+.frag_wrapper {
+    position: absolute;
+    bottom: 0;
+    left: -60px;
+    width: $frag_size * 4;
+    height: $frag_size * 4;
+    transform: rotateX(-50deg) rotateY(-50deg);
+}
+
+.canvas {
+    position: absolute;
+    width: 100%;
+    transform: rotate(45deg);
+}
+
+.canvas2 {
+    transform: rotate($canvas_deg_gap + 45deg);
+    transform-origin: center;
+    background: $canvas_color;
+}
+
+.canvas2.hide { background: none; }
+
+.frag { border-width: 0 $frag_size $frag_size 0; }
+
+.triangle.frag {
+    opacity: .6;
+    transform-style: preserve-3d;
+}
+//fragment
+
+//doors
+
+
+
+@media screen and (min-width: 768px) {
+    //fragment
+    .frag_wrapper { left: 0; }
+    //fragment
+}
