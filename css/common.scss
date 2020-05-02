@@ -1,6 +1,8 @@
 body {
     // background: #ccc;
+    height: 10000px;
 }
+
 
 .flexbox {
    display: flex;
@@ -21,37 +23,39 @@ body {
     overflow: hidden;
     width: 100vw;
     height: 100vh;
+    position: fixed;
 }
 
 .section {
-    position: relative;
+    position: absolute;
     width: calc(100vh / 4);
     height: 100vw;
     background: #fff;
     // transform: rotateZ(90deg);
     transition: .8s;
-}
-.top {
-    transform: rotateZ(90deg) translateY(-100%);
     transform-origin: left top; 
-    z-index: 1;
+    transform: rotateZ(90deg) translateY(-100%);
 }
+
 .about {
-    transform-origin: right top; 
-    transform: rotateZ(90deg) translateX(200%);
+    transform: rotateZ(90deg) translate(100%, -100%);
     background: #ccc;
 }
 .works {
+    transform: rotateZ(90deg) translate(200%, -100%);
     background: #aaa;
 }
 .contact {
+    transform: rotateZ(90deg) translate(300%, -100%);
     background: #999;
 }
 
 .section.active {
     transform: none;
+    top: 0;
     width: 100vw;
     height: 100vh;
     position: fixed;
+    z-index: 100;
 }
 

@@ -31,8 +31,9 @@ function shuffleFrag(fragArray) {
 //opening
 function setOpening() {
 
-    $('.section').each(function() {     
-        // $(this).addClass('section_show');
+    $('.section').on('click', function() {     
+        $(this).addClass('active');
+        // $('#body').addClass('scrollable');
     })
     
 }
