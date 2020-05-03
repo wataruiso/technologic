@@ -50,7 +50,6 @@ $('.section').on('click', function() {
         $('#scrollable').addClass('scrollable');
         $('body').niceScroll({
             scrollspeed: 100, //どのくらい進むか
-            mousescrollstep: 100  //スクロールしたあとの余韻のレベル
             mousescrollstep: 100,  //スクロールしたあとの余韻のレベル
             // cursorcolor: 'rgba(0, 205, 0, .6)'
           });
