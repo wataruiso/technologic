@@ -3,11 +3,12 @@ html, body {
     height: 100%;
 }
 
-#scrollable {
-    height: auto;
+.scrollable {
+    height: 0;
+    position: absolute;
 }
-#scrollable.scrollable {
-    height: 10000px;
+.scrollable.active {
+    height: 10000px !important;
 }
 
 
@@ -71,6 +72,9 @@ html, body {
     width: 100%;
     height: 100%;
     transition: .4s;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 .active .section_inner {
     transform: scale(1);
