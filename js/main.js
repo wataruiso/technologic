@@ -33,10 +33,15 @@ function shuffleFrag(fragArray) {
 
 //opening
 let opening;
+var movefun = function(event) {
+    event.preventDefault();
+}
+
 $('.section').on('click', function() { 
     if(opening) return;    
     opening = true;
     if($(this).hasClass('active')) {
+        $(window).on( 'touchmove' , movefun , { passive: false } );
         $(this).removeClass('active');
         $('html, body').stop().animate({ scrollTop: 0 }, 300);
         setTimeout(() => {
@@ -48,8 +53,8 @@ $('.section').on('click', function() {
         $(this).addClass('active z100');
         $('#scrollable').addClass('scrollable');
         $('body').niceScroll({
-            scrollspeed: 100, //どのくらい進むか
-            mousescrollstep: 100  //スクロールしたあとの余韻のレベル
+            scrollspeed: 50, //どのくらい進むか
+            mousescrollstep: 50  //スクロールしたあとの余韻のレベル
           });
         opening = false;
     }
