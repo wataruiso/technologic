@@ -28,18 +28,33 @@ function shuffleFrag(fragArray) {
 }
 //fragment anime
 
-//opening
-function setOpening() {
 
-    $('.section').on('click', function() {     
-        $(this).addClass('active');
-        // $('#body').addClass('scrollable');
-    })
-    
-}
  
 
-
+//opening
+let opening;
+$('.section').on('click', function() { 
+    if(opening) return;    
+    opening = true;
+    if($(this).hasClass('active')) {
+        $(this).removeClass('active');
+        $('html, body').stop().animate({ scrollTop: 0 }, 300);
+        setTimeout(() => {
+            $(this).removeClass('z100');
+            $('#scrollable').removeClass('scrollable');
+            opening = false;
+        }, 1000);
+    }else {
+        $(this).addClass('active z100');
+        $('#scrollable').addClass('scrollable');
+        $('body').niceScroll({
+            scrollspeed: 100, //どのくらい進むか
+            mousescrollstep: 100  //スクロールしたあとの余韻のレベル
+          });
+        opening = false;
+    }
+})
+//opening
 
 
 
@@ -49,7 +64,6 @@ function setOpening() {
 $(document).ready(function() {
 
     arrangeFrag();  
-    setOpening();
  
 
 })

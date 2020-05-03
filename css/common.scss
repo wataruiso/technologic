@@ -1,5 +1,12 @@
-body {
-    // background: #ccc;
+html, body {
+    background: pink;
+    height: 100%;
+}
+
+#scrollable {
+    height: auto;
+}
+#scrollable.scrollable {
     height: 10000px;
 }
 
@@ -22,17 +29,18 @@ body {
     // flex-flow: row nowrap;
     overflow: hidden;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     position: fixed;
+    top: 0;
 }
 
 .section {
     position: absolute;
+    overflow: hidden;
     width: calc(100vh / 4);
     height: 100vw;
     background: #fff;
-    // transform: rotateZ(90deg);
-    transition: .8s;
+    transition: 1s;
     transform-origin: left top; 
     transform: rotateZ(90deg) translateY(-100%);
 }
@@ -54,8 +62,23 @@ body {
     transform: none;
     top: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     position: fixed;
+}
+
+.section_inner {
+    transform: scale(.6);
+    width: 100%;
+    height: 100%;
+    transition: .4s;
+}
+.active .section_inner {
+    transform: scale(1);
+    width: 100%;
+    height: 100%;
+}
+
+.z100 {
     z-index: 100;
 }
 

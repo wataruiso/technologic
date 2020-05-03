@@ -20,8 +20,5 @@ var _ua = (function(u){
 
 var isWindows = !_ua.MacPC && !_ua.Mobile && !_ua.Tablet;
 
-$('body').niceScroll({
-  scrollspeed: 100, //どのくらい進むか
-  mousescrollstep: 100  //スクロールしたあとの余韻のレベル
-});
+
 
