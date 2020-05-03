@@ -43,7 +43,7 @@ $('.section').on('click', function() {
     if($(this).hasClass('active')) {
         $(window).on( 'touchmove' , movefun , { passive: false } );
         $(this).removeClass('active');
-        $('html, body').stop().animate({ scrollTop: 0 }, 300);
+        $('html, body').stop().animate({ scrollTop: 0 }, 1000);
         setTimeout(() => {
             $(this).removeClass('z100');
             $('#scrollable').removeClass('scrollable');
@@ -53,8 +53,9 @@ $('.section').on('click', function() {
         $(this).addClass('active z100');
         $('#scrollable').addClass('scrollable');
         $('body').niceScroll({
-            scrollspeed: 50, //どのくらい進むか
-            mousescrollstep: 50  //スクロールしたあとの余韻のレベル
+            scrollspeed: 100, //どのくらい進むか
+            mousescrollstep: 100,  //スクロールしたあとの余韻のレベル
+            // cursorcolor: 'rgba(0, 205, 0, .6)'
           });
         opening = false;
     }
@@ -78,7 +79,8 @@ $(document).ready(function() {
 
 $(window).on('scroll', function() {
     let scroll = $(window).scrollTop();    
-
+    // console.log(scroll);
+    
     //fragment anime
     const frag_fire_point = 5000;
     let frag_scroll = scroll - frag_fire_point;
