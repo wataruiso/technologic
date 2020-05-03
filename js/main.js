@@ -39,6 +39,7 @@ $('.section').on('click', function() {
     if($(this).hasClass('active')) {
         $(this).removeClass('active');
         $('html, body').stop().animate({ scrollTop: 0 }, 300);
+        $('html, body').stop().animate({ scrollTop: 0 }, 1000);
         setTimeout(() => {
             $(this).removeClass('z100');
             $('#scrollable').removeClass('scrollable');
@@ -50,6 +51,8 @@ $('.section').on('click', function() {
         $('body').niceScroll({
             scrollspeed: 100, //どのくらい進むか
             mousescrollstep: 100  //スクロールしたあとの余韻のレベル
+            mousescrollstep: 100,  //スクロールしたあとの余韻のレベル
+            // cursorcolor: 'rgba(0, 205, 0, .6)'
           });
         opening = false;
     }
