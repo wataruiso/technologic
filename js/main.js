@@ -40,7 +40,7 @@ pages.on('click', function () {
 
     if ($(this).hasClass('active')) {
         $(this).removeClass('active');
-        $(this).stop().animate({ scrollTop: 0 }, 1000);
+        // $(this).stop().animate({ scrollTop: 0 }, 1000);
         setTimeout(() => {
             $(this).removeClass('z100');
             $('.scrollable', this).removeClass('active');
@@ -53,7 +53,8 @@ pages.on('click', function () {
         $(this).niceScroll('.scrollable', {
             scrollspeed: 100, //どのくらい進むか
             mousescrollstep: 100,  //スクロールしたあとの余韻のレベル
-            // cursorcolor: 'rgba(0, 205, 0, .6)'
+            // cursorcolor: 'rgba(0, 205, 0, .6)',
+            autohidemode: 'hidden',
         });
         opening = false;
     }
@@ -79,7 +80,7 @@ pages.on('scroll', function () {
 
     let scroll = $(this).scrollTop();
     let pageIndex = $(this).index();
-    // console.log(scroll);
+    console.log(scroll);
 
     //fragment anime
     if (pageIndex === 0) {
