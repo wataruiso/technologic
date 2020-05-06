@@ -32,7 +32,7 @@ function shuffleFrag(fragArray) {
 
 
 
-//opening
+//opening-section
 let opening;
 pages.on('click', function () {
     if (opening) return;
@@ -43,31 +43,41 @@ pages.on('click', function () {
         // $(this).stop().animate({ scrollTop: 0 }, 1000);
         setTimeout(() => {
             $(this).removeClass('z100');
-            $('.scrollable', this).removeClass('active');
+            $('.dammy_height', this).removeClass('scrollable');
+            $(this).getNiceScroll().resize();
             opening = false;
         }, 1000);
 
     } else {
         $(this).addClass('active z100');
-        $('.scrollable', this).addClass('active');
-        $(this).niceScroll('.scrollable', {
+        $('.dammy_height', this).addClass('scrollable');
+        $(this).niceScroll('.dammy_height', {
             scrollspeed: 100, //どのくらい進むか
             mousescrollstep: 100,  //スクロールしたあとの余韻のレベル
             // cursorcolor: 'rgba(0, 205, 0, .6)',
-            autohidemode: 'hidden',
+            // autohidemode: 'hidden',
         });
+        $(this).getNiceScroll().resize();
         opening = false;
     }
 })
-//opening
+//opening-section
+
+
+//setting-section
+function setSections() {
+    pages.addClass('reveal');
+}
 
 
 
+//setting-section
 
 
 
 $(document).ready(function () {
 
+    setSections();
     arrangeFrag();
 
 
@@ -80,7 +90,7 @@ pages.on('scroll', function () {
 
     let scroll = $(this).scrollTop();
     let pageIndex = $(this).index();
-    console.log(scroll);
+    // console.log(scroll);
 
     //fragment anime
     if (pageIndex === 0) {
