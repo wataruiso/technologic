@@ -43,6 +43,9 @@ html, body {
     transition: 1s;
     transform-origin: left top; 
 }
+.section:before {
+    width: 0;
+}
 
 .section_inner {
     opacity: 0;
@@ -53,7 +56,6 @@ html, body {
 .concept {
     transform: rotateZ(90deg) translateY(-100%);
     .section_inner {background: #fff;}
-    
 }
 .about {
     transform: rotateZ(90deg) translate(100%, -100%);
@@ -68,14 +70,14 @@ html, body {
     .section_inner {background: #999;}
 }
 
+
 .section.reveal .section_inner {
     opacity: 1;
     transition-delay: .3s;
-    transition-duration: .3s;
 }
 
 .section.reveal:before {
-    animation: hideFromLeft .3s forwards, showFromLeft .3s forwards .3s;
+    animation: hideFromLeft .3s forwards, showFromLeft .3s forwards .5s;
     content: "";
     position: absolute;
     bottom: 0;

@@ -66,11 +66,12 @@ pages.on('click', function () {
 
 //setting-section
 function setSections() {
-    pages.addClass('reveal');
-}
-
-
-
+    $('.section').each(function(index) {
+        setTimeout(() => {
+            $(this).addClass('reveal');
+        }, 100 * index);
+    })
+}   
 //setting-section
 
 
