@@ -91,7 +91,13 @@ pages.on('scroll', function () {
 
     let scroll = $(this).scrollTop();
     let pageIndex = $(this).index();
+    
     // console.log(scroll);
+    // console.log($(window).height());
+    
+    if(scroll > 9000) $(this).click();
+
+
 
     //fragment anime
     if (pageIndex === 0) {
