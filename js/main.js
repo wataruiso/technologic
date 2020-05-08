@@ -40,7 +40,6 @@ pages.on('click', function () {
 
     if ($(this).hasClass('active')) {
         $(this).removeClass('active');
-        // $(this).stop().animate({ scrollTop: 0 }, 1000);
         setTimeout(() => {
             $(this).removeClass('z100');
             $('.dammy_height', this).removeClass('scrollable');
@@ -95,7 +94,16 @@ pages.on('scroll', function () {
     // console.log(scroll);
     // console.log($(window).height());
     
-    if(scroll > 9000) $(this).click();
+    if(scroll > 9000) {
+        $(this).click();
+
+        setTimeout(() => {
+            $(this).click();
+            // console.log(pageIndex);
+            
+        }, 5000);
+
+    }
 
 
 
