@@ -11,11 +11,11 @@ const frags = document.querySelectorAll('.frag');
 function arrangeFrag() {
     const frag_size_range = 120;
     const min_frag_size = 40;
-    frags.forEach((frag, index) => {
+    for(let i = 0; i < frags.length; i++) {
         let random = Math.floor(Math.random() * frag_size_range + min_frag_size);
         rotateZ_memories.push(random);
-        fragArray.push(index + 1);
-    })
+        fragArray.push(i + 1);
+    }
     shuffleFrag(fragArray);
 }
 
@@ -65,7 +65,7 @@ pages.on('click', function () {
 
 //setting-section
 function setSections() {
-    $('.section').each(function(index) {
+    pages.each(function(index) {
         setTimeout(() => {
             $(this).addClass('reveal');
         }, 100 * index);
@@ -116,7 +116,7 @@ pages.on('scroll', function () {
 
 
         if (frag_scroll < 0) {
-            $('.frag_wrapper').css({
+            $('.concept .frag_wrapper').css({
                 'bottom': scroll / 60,
                 'transform': `rotateX(${-50 + scroll / 150}deg) rotateY(${-50 + scroll / 80}deg)`,
             });
@@ -130,14 +130,14 @@ pages.on('scroll', function () {
             let index = fragArray[i - 1];
             let frag_memory = frag_value * rotateZ_memory / (i * 2);
             let color_prop = frag_value == 0 ? 'transparent' : `rgba(0, 205, ${frag_memory}, .6)`;
-            if (i % 2 === 0) $(`.frag${index}`).css({
+            if (i % 2 === 0) $(`.concept .frag_wrapper .frag${index}`).css({
                 'transform': `${persp} 
                           translate(-${frag_memory}%, ${frag_memory}%)  
                           rotateX(-${frag_memory}deg) rotateY(-${frag_memory}deg)`,
                 'border-bottom-color': color_prop
 
             });
-            else $(`.frag${index}`).css({
+            else $(`.concept .frag_wrapper .frag${index}`).css({
                 'transform': `${persp} 
                           translate(${frag_memory}%, ${frag_memory}%) 
                           rotateX(${frag_memory}deg) rotateY(${frag_memory}deg)`,

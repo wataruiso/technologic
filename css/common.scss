@@ -5,6 +5,8 @@ html, body {
 
 .tran1 { transition: 1s; }
 
+.to-lt { transform-origin: left top; }
+
 .flexbox {
    display: flex;
    justify-content: space-between;
