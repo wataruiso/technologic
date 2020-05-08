@@ -7,6 +7,11 @@ html, body {
 
 .to-lt { transform-origin: left top; }
 
+.pof {
+    position: fixed;
+    will-change: transform;
+}
+
 .flexbox {
    display: flex;
    justify-content: space-between;
@@ -23,6 +28,16 @@ html, body {
 
 .z100 {
     z-index: 100;
+}
+
+.fix {
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 10000;
+    background: #000;
 }
 
 

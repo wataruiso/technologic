@@ -83,6 +83,11 @@ $(document).ready(function () {
 
 })
 
+$('.fix').click(function() {
+    const screen = $('#main_container .screen');
+    screen.toggleClass('screen_hidden');
+})
+
 
 
 
