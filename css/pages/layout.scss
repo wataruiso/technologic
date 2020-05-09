@@ -10,10 +10,19 @@
     width: 100vw;
     height: 100%;
     top: 0;
-    transform: rotateZ(360deg);
+    animation: rotateToShown 1s forwards;
 }
 .screen_hidden {
-    transform: rotateZ(180deg);
+    animation: rotateToHidden 1s forwards;
+}
+
+@keyframes rotateToShown {
+    from { transform: perspective(300px) rotateZ(180deg); }
+    to   { transform: perspective(300px) rotateZ(360deg); }
+}
+@keyframes rotateToHidden {
+    from { transform: perspective(300px) rotateZ(0deg); }
+    to   { transform: perspective(300px) rotateZ(180deg); }   
 }
 
 .section {

@@ -68,25 +68,38 @@ function setSections() {
     pages.each(function(index) {
         setTimeout(() => {
             $(this).addClass('reveal');
-        }, 100 * index);
+        }, 1000 + 100 * index);
     })
 }   
 //setting-section
 
 
 
+//set-opening 
+function setOpening() {
+
+}
+//set-opening 
+
+
 $(document).ready(function () {
 
-    setSections();
+    setOpening();
     arrangeFrag();
 
 
 })
 
+//screen-change
+let currentScreenIsTop = true;
 $('.fix').click(function() {
     const screen = $('#main_container .screen');
     screen.toggleClass('screen_hidden');
+    if(currentScreenIsTop) setSections();
+    else setOpening();    
+    currentScreenIsTop = !currentScreenIsTop;
 })
+//screen-change
 
 
 
