@@ -110,3 +110,22 @@
 #eyecatch {
     background: skyblue;
 }
+
+
+@media screen and (min-width: 768px) {
+    .section {
+        width: 100vh;
+        height: calc(100vw / 4);
+    }
+    .about { transform: rotateZ(90deg) translateY(-200%); }
+    .works { transform: rotateZ(90deg) translateY(-300%); }
+    .contact { transform: rotateZ(90deg) translateY(-400%); }
+    @keyframes revealerIn {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(0%); }
+    }
+    @keyframes revealerOut {
+        0% { transform: translateX(0%); }
+        100% { transform: translateX(100%); }
+    }
+}
