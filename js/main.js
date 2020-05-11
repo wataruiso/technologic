@@ -101,7 +101,7 @@ $(document).ready(function () {
 
 //screen-change
 let currentScreenIsTop = true;
-$('.fix').click(function() {
+$('.fix').on('click', function() {
     const screen = $('#main_container .screen');
     screen.toggleClass('screen_hidden');
     if(currentScreenIsTop) setSections();

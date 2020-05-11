@@ -1,4 +1,4 @@
-.dammy_height {
+.dammy_height_section {
     height: 0;
     position: absolute;
 }
@@ -6,7 +6,7 @@
 .scrollable { height: 10000px; }
 
 #eyecatch {
-    background: skyblue;
+    background: #000;
 }
 
 .screen {
@@ -65,11 +65,11 @@
 }
 .works {
     transform: rotateZ(90deg) translate(200%, -100%);
-    .section_inner {background: #aaa;}
+    .section_inner {background: #fff;}
 }
 .contact {
     transform: rotateZ(90deg) translate(300%, -100%);
-    .section_inner {background: #999;}
+    .section_inner {background: #ccc;}
 }
 
 //active
@@ -117,6 +117,8 @@
     color: transparent;
     position: relative;
     animation: textEffect1 1.5s infinite ease-in-out alternate-reverse;
+    font-family: 'Cabin', sans-serif;
+    font-size: 40px;
   }
   .title_effect [data-char]:after, .title_effect [data-char]:before {
     content: attr(data-char);
