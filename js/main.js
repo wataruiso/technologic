@@ -82,6 +82,16 @@ function setOpening() {
 //set-opening 
 
 
+
+const { Splitting } = window;
+Splitting();
+
+
+
+
+
+
+
 $(document).ready(function () {
 
     setOpening();
