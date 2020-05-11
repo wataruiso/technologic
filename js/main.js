@@ -83,8 +83,6 @@ function setOpening() {
 
 
 
-const { Splitting } = window;
-Splitting();
 
 
 
@@ -93,7 +91,8 @@ Splitting();
 
 
 $(document).ready(function () {
-
+    
+    Splitting();
     setOpening();
     arrangeFrag();
 

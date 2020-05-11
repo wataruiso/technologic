@@ -5,6 +5,10 @@
 
 .scrollable { height: 10000px; }
 
+#eyecatch {
+    background: skyblue;
+}
+
 .screen {
     overflow: hidden;
     width: 100vw;
@@ -107,22 +111,14 @@
 }
 //reveal
 
-#eyecatch {
-    background: skyblue;
-}
-
-
-
-
-
-.glitch--3 [data-char] {
+//text effect
+.title_effect [data-char] {
     --split: 50;
     color: transparent;
     position: relative;
-    animation: glitch 1.5s infinite ease-in-out alternate-reverse;
+    animation: textEffect1 1.5s infinite ease-in-out alternate-reverse;
   }
-  .glitch--3 [data-char]:after,
-  .glitch--3 [data-char]:before {
+  .title_effect [data-char]:after, .title_effect [data-char]:before {
     content: attr(data-char);
     position: absolute;
     top: 0%;
@@ -132,47 +128,21 @@
     color: #fff;
     clip-path: var(--clip);
   }
-  .glitch--3 [data-char]:after {
+  .title_effect [data-char]:after {
     transform: translate(calc(var(--shift) * 1%), 0);
     --clip: inset(0 0 calc(var(--split) * 1%) 0);
     text-shadow: calc(var(--shadow) * 1px) calc(var(--shadow) * 1px) #f00;
   }
-  .glitch--3 [data-char]:before {
-    --clip: inset(calc((95 - var(--split)) * 1%) 0 0 0);
+  .title_effect [data-char]:before { --clip: inset(calc((95 - var(--split)) * 1%) 0 0 0); }
+  @keyframes textEffect1 {
+    0%  { --split: 20;--shift: 15;--shadow: -2; }
+    5%  { --split: 30;--shift: 15;--shadow: -2; }
+    10% { --split: 80;--shift: 10;--shadow: -2; }
+    15% { --split: 55;--shift: 10;--shadow: -2; }
+    20%, 50% { --split: 0;--shift: 0;--shadow: 0; }
+    100% { --split: 0;--shift: 0;--shadow: 0; }
   }
-  @keyframes glitch {
-    0% {
-      --split: 20;
-      --shift: 15;
-      --shadow: -2;
-    }
-    5% {
-      --split: 30;
-      --shift: 15;
-      --shadow: -2;
-    }
-    10% {
-      --split: 80;
-      --shift: 10;
-      --shadow: -2;
-    }
-    15% {
-      --split: 55;
-      --shift: 10;
-      --shadow: -2;
-    }
-    20%, 50% {
-      --split: 0;
-      --shift: 0;
-      --shadow: 0;
-    }
-    100% {
-      --split: 0;
-      --shift: 0;
-      --shadow: 0;
-    }
-  }
-
+//text effect
 
 
 
