@@ -9,7 +9,7 @@ $canvas_deg_gap: 180;
 .frag_wrapper {
     position: absolute;
     bottom: 0;
-    left: -60px;
+    right: 0;
     width: calc(var(--frag-size) * 4);
     height: calc(var(--frag-size) * 4);
     transform: rotateX(-50deg) rotateY(-50deg);
@@ -44,8 +44,8 @@ $canvas_deg_gap: 180;
     :root {
         --frag-size: 100px;
     }
-    
+
     //fragment
-    .frag_wrapper { left: 0; }
+    // .frag_wrapper { right: 0; }
     //fragment
 }
