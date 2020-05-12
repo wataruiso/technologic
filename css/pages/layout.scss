@@ -57,19 +57,19 @@
 
 .concept {
     transform: rotateZ(90deg) translateY(-100%);
-    .section_inner {background: #fff;}
+    .section_inner {background: #555;}
 }
 .about {
     transform: rotateZ(90deg) translate(100%, -100%);
-    .section_inner {background: #ccc;}
+    .section_inner {background: #777;}
 }
 .works {
     transform: rotateZ(90deg) translate(200%, -100%);
-    .section_inner {background: #fff;}
+    .section_inner {background: #999;}
 }
 .contact {
     transform: rotateZ(90deg) translate(300%, -100%);
-    .section_inner {background: #ccc;}
+    .section_inner {background: #aaa;}
 }
 
 //active

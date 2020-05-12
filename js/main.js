@@ -40,10 +40,10 @@ pages.on('click', function () {
 
     if ($(this).hasClass('active')) {
         $(this).removeClass('active');
+        $('.dammy_height', this).removeClass('scrollable');
+        $(this).getNiceScroll().resize();
         setTimeout(() => {
             $(this).removeClass('z100');
-            $('.dammy_height', this).removeClass('scrollable');
-            $(this).getNiceScroll().resize();
             opening = false;
         }, 1000);
 
@@ -51,9 +51,8 @@ pages.on('click', function () {
         $(this).addClass('active z100');
         $('.dammy_height', this).addClass('scrollable');
         $(this).niceScroll('.dammy_height', {
-            scrollspeed: 100, //どのくらい進むか
-            mousescrollstep: 100,  //スクロールしたあとの余韻のレベル
-            // cursorcolor: 'rgba(0, 205, 0, .6)',
+            scrollspeed: 50,
+            mousescrollstep: 30,
             // autohidemode: 'hidden',
         });
         $(this).getNiceScroll().resize();
@@ -155,7 +154,7 @@ pages.on('scroll', function () {
             let rotateZ_memory = rotateZ_memories[i - 1];
             let index = fragArray[i - 1];
             let frag_memory = frag_value * rotateZ_memory / (i * 2);
-            let color_prop = frag_value == 0 ? 'transparent' : `rgba(0, 205, ${frag_memory}, .6)`;
+            let color_prop = frag_value == 0 ? 'transparent' : `rgba(${255 - frag_memory / 3}, ${255 - frag_memory / 3}, 255, .6)`;
             if (i % 2 === 0) $(`.concept .frag_wrapper .frag${index}`).css({
                 'transform': `${persp} 
                           translate(-${frag_memory}%, ${frag_memory}%)  
