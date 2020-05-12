@@ -39,11 +39,12 @@ pages.on('click', function () {
     opening = true;
 
     if ($(this).hasClass('active')) {
-        $(this).removeClass('active');
-        $('.dammy_height', this).removeClass('scrollable');
-        $(this).getNiceScroll().resize();
+        $(this).removeClass('active')
+        $(this).stop().animate({scrollTop: 0}, 1000);
         setTimeout(() => {
             $(this).removeClass('z100');
+            $('.dammy_height', this).removeClass('scrollable');
+            $(this).getNiceScroll().resize();
             opening = false;
         }, 1000);
 
@@ -54,6 +55,7 @@ pages.on('click', function () {
             scrollspeed: 50,
             mousescrollstep: 30,
             // autohidemode: 'hidden',
+            touchbehavior: true,
         });
         $(this).getNiceScroll().resize();
         opening = false;

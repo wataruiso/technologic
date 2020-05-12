@@ -1,15 +1,17 @@
+:root {
+    --frag-size: 50px;
+}
+
 //fragment
-// $canvas_color: linear-gradient(45deg, rgba(0, 205, 0, .6), rgba(255, 255, 255, .5));
 $canvas_color: linear-gradient(45deg, rgba(255, 255, 255, .2), rgba(255, 255, 255, .5));
 $canvas_deg_gap: 180;
-$frag_size: 50px;
 
 .frag_wrapper {
     position: absolute;
     bottom: 0;
     left: -60px;
-    width: $frag_size * 4;
-    height: $frag_size * 4;
+    width: calc(var(--frag-size) * 4);
+    height: calc(var(--frag-size) * 4);
     transform: rotateX(-50deg) rotateY(-50deg);
 }
 
@@ -27,7 +29,7 @@ $frag_size: 50px;
 
 .canvas2.hide { background: none; }
 
-.frag { border-width: 0 $frag_size $frag_size 0; }
+.frag { border-width: 0 var(--frag-size) var(--frag-size) 0; }
 
 .triangle.frag {
     opacity: .6;
@@ -39,6 +41,10 @@ $frag_size: 50px;
 
 
 @media screen and (min-width: 768px) {
+    :root {
+        --frag-size: 100px;
+    }
+    
     //fragment
     .frag_wrapper { left: 0; }
     //fragment
