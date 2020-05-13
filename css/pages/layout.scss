@@ -55,19 +55,23 @@
 
 .concept {
     transform: rotateZ(90deg) translateY(-100%);
-    .section_inner {background: #555;}
+    .section_inner {background: #333;}
+    .title_color { color: rgb(50, 50, 200); }
 }
 .about {
     transform: rotateZ(90deg) translate(100%, -100%);
-    .section_inner {background: #777;}
+    .section_inner {background: #555;}
+    .title_color { color: #f00; }
 }
 .works {
     transform: rotateZ(90deg) translate(200%, -100%);
-    .section_inner {background: #999;}
+    .section_inner {background: #777;}
+    .title_color { color: #0f0; }
 }
 .contact {
     transform: rotateZ(90deg) translate(300%, -100%);
-    .section_inner {background: #aaa;}
+    .section_inner {background: #999;}
+    .title_color { color: #0ff; }
 }
 
 .section_title {
@@ -76,13 +80,10 @@
     right: 0;
     top: 0;
     transform-origin: right bottom;
-    font-size: 3rem;
-    color: #fff;
+    font-size: 5rem;
+    color: #aaa;
     line-height: 1;
 }
-// .section_title_even {
-//     transform: translateY(50vw) rotateZ(-90deg);
-// }
 
 //active
 .section.active {
@@ -92,7 +93,6 @@
     height: 100%;
     position: fixed;
 }
-// .active .section_content { transform: scale(1); }
 //active
 
 //reveal
@@ -127,7 +127,6 @@
     color: transparent;
     position: relative;
     animation: textEffect1 1.5s infinite ease-in-out alternate-reverse;
-    font-family: 'Cabin', sans-serif;
     font-size: 3.2rem;
   }
   .title_effect [data-char]:after, .title_effect [data-char]:before {

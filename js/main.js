@@ -117,6 +117,7 @@ pages.on('scroll', function () {
 
     let scroll = $(this).scrollTop();
     let pageIndex = $(this).index();
+    let section_title = $('.section_title', this);
     
     // console.log(scroll);
     // console.log($(window).height());
@@ -134,7 +135,7 @@ pages.on('scroll', function () {
 
 
 
-    //fragment anime
+    //concept
     if (pageIndex === 0) {
         const frag_fire_point = 5000;
         let frag_scroll = scroll - frag_fire_point;
@@ -148,8 +149,10 @@ pages.on('scroll', function () {
                 'transform': `rotateX(${-50 + scroll / 150}deg) rotateY(${-50 + scroll / 80}deg)`,
             });
             canvas2.removeClass('hide');
+            section_title.removeClass('title_color');
         } else {
             canvas2.addClass('hide');
+            section_title.addClass('title_color');
         }
 
         for (let i = 1; i < frags.length + 1; i++) {
@@ -172,7 +175,7 @@ pages.on('scroll', function () {
             });
         }
     }
-    //fragment anime  
+    //concept  
 
 
 
