@@ -7,6 +7,17 @@
 
 #eyecatch {
     background: #000;
+    .staggering-grid-demo {
+        display: flex;
+        flex-wrap: wrap;
+        width: 700px;
+        height: 250px;
+        .el { 
+            background: aqua; 
+            width: 50px;
+            height: 50px;
+        }
+    }
 }
 
 .screen {
@@ -172,7 +183,7 @@
 
 
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 896px) {
     .section {
         width: 100vh;
         height: calc(100vw / 4);

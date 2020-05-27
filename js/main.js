@@ -102,13 +102,20 @@ $(document).ready(function () {
 
 //screen-change
 let currentScreenIsTop = true;
-$('.fix').on('click', function() {
-    const screen = $('#main_container .screen');
-    screen.toggleClass('screen_hidden');
-    if(currentScreenIsTop) setSections();
-    currentScreenIsTop = !currentScreenIsTop;
+$('#main_container #eyecatch').on('click', function() {
+    $('#main_container .screen').toggleClass('screen_hidden');
+    setSections();
 })
 //screen-change
+
+anime({
+    targets: '.staggering-grid-demo .el',
+    scale: [
+      {value: 0, easing: 'easeOutSine', duration: 500},
+    //   {value: 1, easing: 'easeInOutQuad', duration: 1200}
+    ],
+    delay: anime.stagger(200, {grid: [14, 5], from: 'center'})
+  });
 
 
 
