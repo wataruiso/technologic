@@ -37,8 +37,10 @@ let opening;
 pages.on('click', function () {
     if (opening) return;
     opening = true;
+    let section_title = $('.section_title', this);
 
     if ($(this).hasClass('active')) {
+        section_title.removeClass('title_effect')
         $(this).removeClass('active')
         $(this).stop().animate({scrollTop: 0}, 1000);
         setTimeout(() => {
@@ -49,6 +51,7 @@ pages.on('click', function () {
         }, 1000);
 
     } else {
+        section_title.addClass('title_effect');
         $(this).addClass('active z100');
         $('.dammy_height', this).addClass('scrollable');
         $(this).niceScroll('.dammy_height', {
@@ -100,22 +103,88 @@ $(document).ready(function () {
 })
 
 
+//grid
+const grid_row = 8;
+const grid_column = 14;
+const grid_num = grid_row * grid_column;
+for (let i = 0; i < grid_num; i++) {
+    const grid = document.getElementById('grid');
+    const el = document.createElement('li');
+    grid.appendChild(el);
+}
+
+setTimeout(() => {
+    anime({
+        targets: '.grid li',
+        scale: [
+          {value: 0, easing: 'easeOutSine', duration: 500},
+        //   {value: 1, easing: 'easeInOutQuad', duration: 1200}
+        ],
+        delay: anime.stagger(200, {grid: [grid_column, grid_row], from: 'center'})
+      });
+    
+}, 1000);
+
+setTimeout(() => {
+    $('#grid').remove();
+}, 3000);
+//grid
+
+
+
+//jiguzagu
+
+
+
+anime({
+    targets: '#eyecatch .jiguzagu',
+    strokeDashoffset: [anime.setDashoffset, -2600],
+    easing: 'easeInOutSine',
+    duration: 2000,
+    loop: true,
+    delay: function(el, i, l) {
+        return i * 100;
+    },
+    endDelay: function(el, i, l) {
+    return i * 100;
+    },
+    keyframes: [
+        {opacity: 1},{opacity: 1},{opacity: 1},{opacity: 1},{opacity: 1},
+        {opacity: 1},{opacity: 1},{opacity: 1},{opacity: 1},{opacity: 0},
+    ],
+});
+
+
+
+var polys = document.querySelectorAll('polygon,polyline');
+[].forEach.call(polys,convertPolyToPath);
+
+function convertPolyToPath(poly){
+  var svgNS = poly.ownerSVGElement.namespaceURI;
+  var path = document.createElementNS(svgNS,'path');
+  var pathdata = 'M '+poly.getAttribute('points');
+  if (poly.tagName=='polygon') pathdata+='z';
+  path.setAttribute('d',pathdata);
+  poly.parentNode.replaceChild(path,poly);
+}
+
+
+
+
+
+//jiguzagu
+
 //screen-change
 let currentScreenIsTop = true;
 $('#main_container #eyecatch').on('click', function() {
     $('#main_container .screen').toggleClass('screen_hidden');
     setSections();
+    setTimeout(() => {
+        $(this).remove();
+    }, 1000);
 })
 //screen-change
 
-anime({
-    targets: '.staggering-grid-demo .el',
-    scale: [
-      {value: 0, easing: 'easeOutSine', duration: 500},
-    //   {value: 1, easing: 'easeInOutQuad', duration: 1200}
-    ],
-    delay: anime.stagger(200, {grid: [14, 5], from: 'center'})
-  });
 
 
 
@@ -124,17 +193,11 @@ pages.on('scroll', function () {
 
     let scroll = $(this).scrollTop();
     let pageIndex = $(this).index();
-    let section_title = $('.section_title', this);
-    
-    // console.log(scroll);
-    // console.log($(window).height());
     
     if(scroll > 9000) {
         $(this).click();
-
         setTimeout(() => {
             $(this).click();
-            // console.log(pageIndex);
             
         }, 5000);
 
@@ -156,10 +219,8 @@ pages.on('scroll', function () {
                 'transform': `rotateX(${-50 + scroll / 150}deg) rotateY(${-50 + scroll / 80}deg)`,
             });
             canvas2.removeClass('hide');
-            section_title.removeClass('title_color');
         } else {
             canvas2.addClass('hide');
-            section_title.addClass('title_color');
         }
 
         for (let i = 1; i < frags.length + 1; i++) {
