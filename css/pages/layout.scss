@@ -1,31 +1,20 @@
-$blue: rgb(47, 0, 255);
-$dark_blue: rgb(22, 3, 109);
-$black_blue: rgb(6, 1, 31);
+@import "../variable";
+:root {
+    --main: rgb(89, 57, 233);
+    --main-dark: rgb(22, 3, 109);
+    --main-black: rgb(6, 1, 31);
+}
 
 .scrollable { height: 10000px; }
 
-#eyecatch {
-    background: $dark_blue;
-    .grid {
-        width: 1400px;
-        height: 800px;
-        transform: translate(-50%, -50%) rotateZ(90deg);
-        transform-origin: center;
-        li { 
-            background: rgb(55, 73, 236); 
-            width: 100px;
-            height: 100px;
-        }
-    }
-}
+.chikachika { animation: chikachika 3s alternate infinite; }
+.dark_bg { background: var(--main-black); }
 
 .screen {
     width: 100vw;
     top: 0;
 }
-.screen_hidden {
-    transform: translateX(-100%);
-}
+.screen_hidden { transform: translateX(-100%); }
 
 .section {
     width: calc(100vh / 4);
@@ -35,12 +24,12 @@ $black_blue: rgb(6, 1, 31);
 
 .section_inner {
     opacity: 0;
-    border: 1px solid $black_blue;
-    background: #222;
+    border: 2px solid var(--main);
 }
 
 .section_content {
     transform-origin: right bottom;
+    filter: brightness(.5);
     top: 0;
     left: 0;
 }
@@ -51,12 +40,11 @@ $black_blue: rgb(6, 1, 31);
 .contact { transform: rotateZ(90deg) translate(300%, -100%); }
 
 .section_title {
-    transform: translateY(-100%) rotateZ(-90deg);
+    transform: translateY(-90%) rotateZ(-90deg);
     right: 0;
     top: 0;
     transform-origin: right bottom;
     font-size: 5rem;
-    color: $black_blue;
     line-height: 1;
 }
 
@@ -68,6 +56,7 @@ $black_blue: rgb(6, 1, 31);
     height: 100%;
     position: fixed;
     will-change: transform;
+    .section_content { filter: none; }
     .section_title {
         font-size: 4rem;
         transform: translate(-5%, 15%); 
@@ -78,7 +67,7 @@ $black_blue: rgb(6, 1, 31);
 //reveal
 .section.reveal .section_inner {
     opacity: 1;
-    transition-delay: .3s;
+    transition-delay: .2s;
 }
 .section.reveal:before {
     animation: revealerIn .3s forwards, revealerOut .3s forwards .5s;
@@ -88,7 +77,7 @@ $black_blue: rgb(6, 1, 31);
     left: 0;
     width: 100%;
     height: 100%;
-    background: $black_blue;
+    background: var(--main-dark);
     z-index: 1;
 }
 @keyframes revealerIn {
@@ -100,49 +89,6 @@ $black_blue: rgb(6, 1, 31);
     100% { transform: translateY(100%); }
 }
 //reveal
-
-//text effect
-.title_effect [data-char] {
-    --split: 50;
-    color: transparent;
-    position: relative;
-    animation: textEffect1 1.5s infinite ease-in-out alternate-reverse;
-  }
-  .title_effect [data-char]:after, .title_effect [data-char]:before {
-    content: attr(data-char);
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    height: 100%;
-    width: 100%;
-    color: #fff;
-    clip-path: var(--clip);
-  }
-  .title_effect [data-char]:after {
-    transform: translate(calc(var(--shift) * 1%), 0);
-    --clip: inset(0 0 calc(var(--split) * 1%) 0);
-    text-shadow: calc(var(--shadow) * 1px) calc(var(--shadow) * 1px) $blue;
-  }
-  .title_effect [data-char]:before { --clip: inset(calc((95 - var(--split)) * 1%) 0 0 0); }
-  @keyframes textEffect1 {
-    0%  { --split: 20;--shift: 15;--shadow: -2; }
-    5%  { --split: 30;--shift: 15;--shadow: -2; }
-    10% { --split: 80;--shift: 10;--shadow: -2; }
-    15% { --split: 55;--shift: 10;--shadow: -2; }
-    20%, 50% { --split: 0;--shift: 0;--shadow: 0; }
-    100% { --split: 0;--shift: 0;--shadow: 0; }
-  }
-//text effect
-
-//jiguzagu
-#jiguzagu_svg { width: 600px;height: 100px; }
-.jiguzagu{fill:none;stroke:#0000FF;stroke-width:4;stroke-miterlimit:10;}
-.jiguzagu_shadow { fill:none;stroke:rgb(255, 255, 255);stroke-width:4;stroke-miterlimit:10; }
-//jiguzagu
-
-
-
-
 
 
 
@@ -169,9 +115,6 @@ $black_blue: rgb(6, 1, 31);
         0% { transform: translateX(0%); }
         100% { transform: translateX(100%); }
     }
-    .grid {transform: translate(-50%, -50%) !important; }
-    .section.active .section_title {
-        font-size: 6rem;
-    }
-    #jiguzagu_svg { width: 1300px; height: 200px; }
+    .screen_hidden { transform: translateY(100%); }
+
 }

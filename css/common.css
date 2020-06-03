@@ -1,1 +1,1 @@
-html,body{height:100%;font-family:'Oswald', sans-serif}body{background:url(../img/graybg.png) center center/cover}.tran1{transition:1s}.to-lt{transform-origin:left top}.cover{position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);margin:auto}
+html,body{height:100%;font-family:'Oswald', sans-serif}.tran1{transition:1s}.to-lt{transform-origin:left top}.cover{position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);margin:auto}@keyframes chikachika{from{filter:brightness(1)}to{filter:brightness(0.5)}}

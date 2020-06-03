@@ -3,7 +3,7 @@ html, body {
     font-family: 'Oswald', sans-serif;
 }
 
-body { background: url(../img/graybg.png) center center / cover; }
+// body { background: url(../img/) center center / cover; }
 
 .tran1 { transition: 1s; }
 
@@ -15,5 +15,10 @@ body { background: url(../img/graybg.png) center center / cover; }
     left: 50%;
     transform: translate(-50%, -50%);
     margin: auto;
+}
+
+@keyframes chikachika {
+    from {filter: brightness(1);}
+    to {filter: brightness(.5);}
 }
 

@@ -1,9 +1,11 @@
+@import "variable";
+
 :root {
     --frag-size: 50px;
 }
 
 //fragment
-$canvas_color: linear-gradient(45deg, rgba(255, 255, 255, .2), rgba(255, 255, 255, .5));
+$canvas_color: linear-gradient(45deg, var(--main), var(--main-dark));
 $canvas_deg_gap: 180;
 
 .frag_wrapper {
@@ -12,7 +14,7 @@ $canvas_deg_gap: 180;
     right: 0;
     width: calc(var(--frag-size) * 4);
     height: calc(var(--frag-size) * 4);
-    transform: rotateX(-50deg) rotateY(-50deg);
+    // transform: rotateX(-50deg) rotateY(-50deg);
 }
 
 .canvas {
@@ -21,15 +23,20 @@ $canvas_deg_gap: 180;
     transform: rotate(45deg);
 }
 
+
 .canvas2 {
     transform: rotate($canvas_deg_gap + 45deg);
     transform-origin: center;
     background: $canvas_color;
+    // border: 2px solid var(--main);
+    // box-shadow: 3px 3px 50px var(--main);
 }
 
-.canvas2.hide { background: none; }
+.canvas2.hide { background: none;border:none;box-shadow: none; }
 
-.frag { border-width: 0 var(--frag-size) var(--frag-size) 0; }
+.frag { 
+    border-width: 0 var(--frag-size) var(--frag-size) 0; 
+}
 
 .triangle.frag {
     opacity: .6;
@@ -38,14 +45,112 @@ $canvas_deg_gap: 180;
 //fragment
 
 
+//text effect
+.title_effect [data-char] {
+    --split: 50;
+    color: transparent;
+    position: relative;
+    animation: textEffect1 1.5s infinite ease-in-out alternate-reverse;
+  }
+  .title_effect [data-char]:after, .title_effect [data-char]:before {
+    content: attr(data-char);
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    color: #fff;
+    clip-path: var(--clip);
+  }
+  .title_effect [data-char]:after {
+    transform: translate(calc(var(--shift) * 1%), 0);
+    --clip: inset(0 0 calc(var(--split) * 1%) 0);
+    text-shadow: calc(var(--shadow) * 1px) calc(var(--shadow) * 1px) var(--main);
+  }
+  .title_effect [data-char]:before { --clip: inset(calc((95 - var(--split)) * 1%) 0 0 0); }
+  @keyframes textEffect1 {
+    0%  { --split: 20;--shift: 15;--shadow: -2; }
+    5%  { --split: 30;--shift: 15;--shadow: -2; }
+    10% { --split: 80;--shift: 10;--shadow: -2; }
+    15% { --split: 55;--shift: 10;--shadow: -2; }
+    20%, 50% { --split: 0;--shift: 0;--shadow: 0; }
+    100% { --split: 0;--shift: 0;--shadow: 0; }
+  }
+//text effect
+
+//jiguzagu
+.jiguzagu_box { top: 50%; left: 50%; transform: translate(-50%, -45%); min-width: 450px;}
+.jiguzagu_box.hide, .title_box.hide svg { opacity: 0; }
+.jiguzagu{fill:none;stroke:var(--main);stroke-width:4;stroke-miterlimit:10;}
+.jiguzagu_shadow { fill:none;stroke:rgb(255, 255, 255);stroke-width:4;stroke-miterlimit:10; }
+//jiguzagu
+
+//hexagon
+.hexagon_box { 
+    min-width: 400px; 
+    max-width: 600px; 
+    width: 100%;
+    display: none;
+}
+.hexagon_box_top { left: -70px; top: -70px;}
+.hexagon_box_bottom { bottom: -90px; right: -70px; transform: rotate(180deg);}
+.hexagon{fill:none;stroke:var(--main);stroke-width:4;stroke-miterlimit:10;}
+//hexagon
+
+//circle
+.circle_box { max-width: 360px; transform: translate(-50%, -50%); transition: .5s; }
+.circle{fill:none;stroke:var(--main);stroke-miterlimit:10;}
+.circle0{stroke-width:16;}
+.circle1{stroke-width:20;}
+.circle2{stroke-width:30;}
+.circle3{stroke-width:10;}
+//circle
+
+//title
+.title_box{ top: 20%; right: 5%; max-width: 400px; min-width: 150px; opacity: 0;animation: titleShow 2s 6s forwards;}
+.title_box_bg{ top: 12%; left: 10%; max-width: 900px; min-width: 400px;}
+.title {fill: var(--main);opacity: .7;} 
+.title_bg { opacity: .1; }
+@keyframes titleShow {
+    0% {opacity: 0;}
+    10% {opacity: .5;}
+    40% {opacity: .4;}
+    42% {opacity: .1;}
+    44% {opacity: .4;}
+    46% {opacity: .1;}
+    48% {opacity: .4;}
+    50% {opacity: 1;}
+    100% {opacity: 1;}
+}
+//title 
+
+//start
+.start_box { max-width: 100px; left: 25%;bottom: 25%; }
+.start { fill: var(--main); }
+//start
 
 
-@media screen and (min-width: 768px) {
+
+@media screen and (min-width: 896px) {
+
     :root {
         --frag-size: 100px;
     }
 
-    //fragment
-    // .frag_wrapper { right: 0; }
-    //fragment
+    .grid {transform: translate(-50%, -50%) !important; }
+    .section.active .section_title {
+        font-size: 6rem;
+    }
+
+    .hexagon_box_top { top: -10px; left: -70px; }
+    .hexagon_box_bottom { bottom: -50px; right: -70px; }
+
+    .circle_box:hover {
+        animation: none;
+        transform: translate(-50%, -50%) scale(1.2) rotate(45deg);
+        transform-origin: center;
+    }
+
+    .title_box{ top: 30%; right: 5%; max-width: 400px; min-width: 300px;}
+    .title_box_bg{ top: 18%; left: auto; right: 0; max-width: 900px; min-width: 700px;}
 }

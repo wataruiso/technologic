@@ -37,10 +37,8 @@ let opening;
 pages.on('click', function () {
     if (opening) return;
     opening = true;
-    let section_title = $('.section_title', this);
 
     if ($(this).hasClass('active')) {
-        section_title.removeClass('title_effect')
         $(this).removeClass('active')
         $(this).stop().animate({scrollTop: 0}, 1000);
         setTimeout(() => {
@@ -51,7 +49,6 @@ pages.on('click', function () {
         }, 1000);
 
     } else {
-        section_title.addClass('title_effect');
         $(this).addClass('active z100');
         $('.dammy_height', this).addClass('scrollable');
         $(this).niceScroll('.dammy_height', {
@@ -85,7 +82,24 @@ function setOpening() {
 }
 //set-opening 
 
+//set-hue
+let hueNum;
+function setHue() {
+    const root = $(':root');
+    const hue = [
+        ['89, 57, 233', '22, 3, 109', '6, 1, 31'],
+        ['57, 233, 166', '3, 109, 74', '1, 31, 20'],
+        ['233, 57, 180', '109, 3, 95', '31, 1, 26'],
+    ];
+    hueNum = Math.floor(Math.random() * 3);
+    
+    root.css('--main', `rgb(${hue[hueNum][0]})`);
+    root.css('--main-dark', `rgb(${hue[hueNum][1]})`);
+    root.css('--main-black', `rgb(${hue[hueNum][2]})`);
 
+}
+
+//set-hue
 
 
 
@@ -95,7 +109,7 @@ function setOpening() {
 
 
 $(document).ready(function () {
-    
+    setHue();
     Splitting();
     setOpening();
     arrangeFrag();
@@ -103,58 +117,8 @@ $(document).ready(function () {
 })
 
 
-//grid
-const grid_row = 8;
-const grid_column = 14;
-const grid_num = grid_row * grid_column;
-for (let i = 0; i < grid_num; i++) {
-    const grid = document.getElementById('grid');
-    const el = document.createElement('li');
-    grid.appendChild(el);
-}
-
-setTimeout(() => {
-    anime({
-        targets: '.grid li',
-        scale: [
-          {value: 0, easing: 'easeOutSine', duration: 500},
-        //   {value: 1, easing: 'easeInOutQuad', duration: 1200}
-        ],
-        delay: anime.stagger(200, {grid: [grid_column, grid_row], from: 'center'})
-      });
-    
-}, 1000);
-
-setTimeout(() => {
-    $('#grid').remove();
-}, 3000);
-//grid
-
-
 
 //jiguzagu
-
-
-
-anime({
-    targets: '#eyecatch .jiguzagu',
-    strokeDashoffset: [anime.setDashoffset, -2600],
-    easing: 'easeInOutSine',
-    duration: 2000,
-    loop: true,
-    delay: function(el, i, l) {
-        return i * 100;
-    },
-    endDelay: function(el, i, l) {
-    return i * 100;
-    },
-    keyframes: [
-        {opacity: 1},{opacity: 1},{opacity: 1},{opacity: 1},{opacity: 1},
-        {opacity: 1},{opacity: 1},{opacity: 1},{opacity: 1},{opacity: 0},
-    ],
-});
-
-
 
 var polys = document.querySelectorAll('polygon,polyline');
 [].forEach.call(polys,convertPolyToPath);
@@ -169,19 +133,111 @@ function convertPolyToPath(poly){
 }
 
 
-
-
+const jiguzagu_box = $('#main_container #eyecatch .jiguzagu_box');
+anime({
+    targets: '#eyecatch .jiguzagu',
+    strokeDashoffset: [anime.setDashoffset, -2200],
+    easing: 'easeInOutSine',
+    duration: 2000,
+    loop: true,
+    delay: function(el, i, l) {
+        return 1000 + i * 100;
+    },
+    endDelay: function(el, i, l) {
+    return i * 100;
+    },
+    keyframes: [
+        {opacity: 1},{opacity: 1},{opacity: 1},{opacity: 1},{opacity: 1},
+        {opacity: 1},{opacity: 1},{opacity: 1},{opacity: 1},{opacity: 0},
+    ],
+});
 
 //jiguzagu
 
+//hexagon
+
+setTimeout(() => {
+    $('#eyecatch .hexagon_box').show();
+    anime({
+        targets: '#eyecatch .hexagon_box_top .hexagon',
+        strokeDashoffset: [anime.setDashoffset, 0],
+        easing: 'linear',
+        duration: 5000,
+        loop: true,
+        direction: 'normal',
+        delay: function(el, i, l) {
+            return i * 600;
+        },
+        keyframes: [
+            {opacity: 1},{opacity: 0},{opacity: 1},{opacity: 0},
+        ],
+    });
+    anime({
+        targets: '#eyecatch .hexagon_box_bottom .hexagon',
+        strokeDashoffset: [anime.setDashoffset, 0],
+        easing: 'linear',
+        duration: 5000,
+        loop: true,
+        direction: 'normal',
+        delay: function(el, i, l) {
+            return i * 600;
+        },
+        keyframes: [
+            {opacity: 1},{opacity: 0},{opacity: 1},{opacity: 0},
+        ],
+    });
+    
+}, 3000);
+
+
+
+//hexagon
+
+
+//circle
+const circle_box = $('#main_container #eyecatch .circle_box');
+anime({
+    targets: '#eyecatch .circle',
+    strokeDashoffset: [anime.setDashoffset, 0],
+    easing: 'easeInOutSine',
+    duration: 500,
+    loop: false,
+    delay: function(el, i, l) {
+        return 3000 + i * 200;
+    },
+});
+
+//circle
+
+//title
+const title_box = $('#main_container #eyecatch .title_box');
+
+//title
+
+
+
 //screen-change
 let currentScreenIsTop = true;
-$('#main_container #eyecatch').on('click', function() {
-    $('#main_container .screen').toggleClass('screen_hidden');
+const circle_hide_time = 500;
+circle_box.on('click', function() {
+    anime({
+        targets: '#eyecatch .circle',
+        strokeDashoffset: [0, anime.setDashoffset],
+        easing: 'easeInOutSine',
+        duration: circle_hide_time,
+        direction: 'normal',
+        loop: false,
+    });
+    setTimeout(() => {
+        circle_box.hide();
+    }, circle_hide_time);
+    jiguzagu_box.addClass('hide');
+    title_box.addClass('hide');
+    $('#main_container .screen_hidden').removeClass('screen_hidden');
     setSections();
     setTimeout(() => {
-        $(this).remove();
-    }, 1000);
+        $('#main_container #eyecatch').remove();
+    }, 2000);
 })
 //screen-change
 
@@ -194,14 +250,7 @@ pages.on('scroll', function () {
     let scroll = $(this).scrollTop();
     let pageIndex = $(this).index();
     
-    if(scroll > 9000) {
-        $(this).click();
-        setTimeout(() => {
-            $(this).click();
-            
-        }, 5000);
-
-    }
+    if(scroll > 9000) $(this).click();
 
 
 
@@ -216,7 +265,6 @@ pages.on('scroll', function () {
         if (frag_scroll < 0) {
             $('.concept .frag_wrapper').css({
                 'bottom': scroll / 60,
-                'transform': `rotateX(${-50 + scroll / 150}deg) rotateY(${-50 + scroll / 80}deg)`,
             });
             canvas2.removeClass('hide');
         } else {
@@ -227,13 +275,27 @@ pages.on('scroll', function () {
             let rotateZ_memory = rotateZ_memories[i - 1];
             let index = fragArray[i - 1];
             let frag_memory = frag_value * rotateZ_memory / (i * 2);
-            let color_prop = frag_value == 0 ? 'transparent' : `rgba(${255 - frag_memory / 3}, ${255 - frag_memory / 3}, 255, .6)`;
+            let color_prop;
+            if(frag_value == 0) color_prop = 'transparent';
+            else {                
+                switch (hueNum) {
+                    case 1:
+                        color_prop = `rgba(${57 / (frag_memory / 15)}, ${233 / (frag_memory / 15)}, ${166 / (frag_memory / 15)}, .6)`
+                        break;
+                    case 2:
+                        color_prop = `rgba(${233 / (frag_memory / 15)}, ${57 / (frag_memory / 15)}, ${180 / (frag_memory / 15)}, .6)`
+                        break;
+                    default:
+                        color_prop = `rgba(${89 / (frag_memory / 15)}, ${57 / (frag_memory / 15)}, ${233 / (frag_memory / 15)}, .6)`
+                        break;
+                }
+            }
+
             if (i % 2 === 0) $(`.concept .frag_wrapper .frag${index}`).css({
                 'transform': `${persp} 
                           translate(-${frag_memory}%, ${frag_memory}%)  
                           rotateX(-${frag_memory}deg) rotateY(-${frag_memory}deg)`,
                 'border-bottom-color': color_prop
-
             });
             else $(`.concept .frag_wrapper .frag${index}`).css({
                 'transform': `${persp} 
