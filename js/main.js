@@ -87,15 +87,16 @@ let hueNum;
 function setHue() {
     const root = $(':root');
     const hue = [
-        ['89, 57, 233', '22, 3, 109', '6, 1, 31'],
-        ['57, 233, 166', '3, 109, 74', '1, 31, 20'],
-        ['233, 57, 180', '109, 3, 95', '31, 1, 26'],
+        ['89, 57, 233', '22, 3, 109', '6, 1, 31', '9, 2, 48'],
+        ['57, 233, 166', '3, 109, 74', '1, 31, 20', '2, 48, 33'],
+        ['233, 57, 180', '109, 3, 95', '31, 1, 26', '48, 2, 40'],
     ];
     hueNum = Math.floor(Math.random() * 3);
     
     root.css('--main', `rgb(${hue[hueNum][0]})`);
     root.css('--main-dark', `rgb(${hue[hueNum][1]})`);
     root.css('--main-black', `rgb(${hue[hueNum][2]})`);
+    root.css('--main-black-grad', `rgb(${hue[hueNum][3]})`);
 
 }
 
@@ -185,12 +186,8 @@ setTimeout(() => {
         keyframes: [
             {opacity: 1},{opacity: 0},{opacity: 1},{opacity: 0},
         ],
-    });
-    
+    });  
 }, 3000);
-
-
-
 //hexagon
 
 
@@ -214,12 +211,29 @@ const title_box = $('#main_container #eyecatch .title_box');
 
 //title
 
+//start
+const start_box = $('#main_container #eyecatch .start_box');
+anime({
+    targets: '#eyecatch .start_box .start_line',
+    strokeDashoffset: [anime.setDashoffset, 0],
+    easing: 'easeInOutSine',
+    duration: 300,
+    loop: false,
+    direction: 'normal',
+    delay: 9000,
+});
+
+//start
+
 
 
 //screen-change
-let currentScreenIsTop = true;
+let isOpening = false;
 const circle_hide_time = 500;
-circle_box.on('click', function() {
+const click_to_start = $('#main_container #eyecatch .click_to_start');
+click_to_start.on('click', function() {
+    if(isOpening) return;
+    isOpening = true;
     anime({
         targets: '#eyecatch .circle',
         strokeDashoffset: [0, anime.setDashoffset],
@@ -233,11 +247,13 @@ circle_box.on('click', function() {
     }, circle_hide_time);
     jiguzagu_box.addClass('hide');
     title_box.addClass('hide');
+    start_box.addClass('hide');
     $('#main_container .screen_hidden').removeClass('screen_hidden');
     setSections();
     setTimeout(() => {
         $('#main_container #eyecatch').remove();
     }, 2000);
+    isOpening = false;
 })
 //screen-change
 

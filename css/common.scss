@@ -22,3 +22,8 @@ html, body {
     to {filter: brightness(.5);}
 }
 
+.d-md-block { display: none; }
+@media screen and (min-width: 896px) {
+    .d-md-none { display: none; }
+    .d-md-block { display: block; } 
+}
