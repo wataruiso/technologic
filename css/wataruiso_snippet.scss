@@ -66,7 +66,7 @@ table {
     .td-0#{$i} { transition-delay: .1s * $i; }
 }
 
-@for $i from 0 through 8 {
+@for $i from 0 through 9 {
     .mt-#{$i * 10} { margin-top: 10px * $i; }
     .ml-#{$i * 10} { margin-left: 10px * $i; }
     .mr-#{$i * 10} { margin-right: 10px * $i; }
