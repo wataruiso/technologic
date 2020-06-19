@@ -1,6 +1,6 @@
 .scrollable { height: 10000px; }
 
-#main_container { background: url(../../img/graybg.png) center center / cover; }
+#main_container { background: radial-gradient(var(--main-dark), var(--main-black)); }
 
 .chikachika { animation: chikachika 3s alternate infinite; }
 .dark_bg { background: var(--main-black); }
@@ -15,10 +15,7 @@
 }
 .screen_hidden { transform: translateX(-100%); }
 
-.section {
-    width: calc(100vh / 4);
-    height: 100vw;
-}
+.section { height: 100vw; }
 .section:before { width: 0; }
 
 .section_inner { opacity: 0; }
@@ -27,7 +24,9 @@
     transform-origin: right bottom;
     top: 0;
     left: 0;
+    border: 1px solid var(--main);
 }
+.active .section_content { border: none; }
 
 .content_inner {opacity: 0;}
 
@@ -49,7 +48,6 @@
 .section.active {
     transform: none;
     top: 0;
-    width: 100%;
     height: 100%;
     position: fixed;
     will-change: transform;

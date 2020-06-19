@@ -38,6 +38,16 @@
 .active_none { right: 0; }
 .concept .active_none { transform: translateX(80%); }
 .about .active_none { transform: translateX(110%); }
+.works .active_none { transform: translateX(110%); }
+
+.contact {
+    .active_none { transform: translateX(115%); }
+    .content_inner {
+        flex-flow: column nowrap;
+        height: 50%; margin: auto; top: 25%;
+    }
+}
+.icon { transform: translateX(-350%); }
 
 .concept_title {
     font-size: 1.2rem;
@@ -48,3 +58,43 @@
 .myimg { opacity: 0; }
 .active .myimg { opacity: 1; }
 .active .myimg_base { opacity: 0; }
+
+.active.works {
+    .section_num { width: 80%; opacity: 1; }
+    .work_triangle { width: 45%; }
+    .work_triangle.tri2 { transform: translateX(-120%) rotateX(180deg) rotateY(180deg); }
+    .work_triangle.content_tri, .work_triangle.tri2 { transform-origin: 72% 95%; }
+    
+} 
+
+.content_tri { transform: translateX(0) rotateX(180deg) rotateY(180deg);opacity: 0.3; }
+
+
+
+
+.active.contact {
+    .section_num { width: 180%;transform: translate(10%, 10%); }
+    .content_inner {
+        transition-delay: 1s;
+    }
+    .icon { transform: none; }
+}
+.active .rect { 
+    fill: #fff3;
+    stroke: var(--main);
+    stroke-width: .2;
+}
+.active .rect1 {
+    transform: translate(90%, -15%);
+}
+
+.icon {
+    width: 40px;height: 40px;
+    transition-duration: 1.2s;
+    path { fill: #fff5; }
+}
+@for $i from 1 through 6 {
+    .icon:nth-child(#{$i}) {
+        transition-delay: $i * .2s;
+    }
+}

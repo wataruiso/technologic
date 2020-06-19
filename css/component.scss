@@ -105,7 +105,7 @@
 .start_line {fill: none;stroke:var(--main);stroke-width:.5;stroke-miterlimit:10;}
 .eyecatch_start_show {
     opacity: 0;
-    animation: show .1s 9.1s forwards;
+    animation: show .1s 9.3s forwards;
 }
 @keyframes show {
     from { opacity: 0; }
@@ -127,15 +127,14 @@
 .flash { animation: none; }
 
 .active .leftline {
-    polygon, .scroll { opacity: 1; }
+    polygon { opacity: 1; }
 }
 
 .active.concept, .active.about, .active.works {
-    .leftline {
-         filter: url(#leftline_brightness); 
-    } 
+    .leftline { filter: url(#leftline_brightness); } 
     .flash { animation: flash .5s infinite alternate; }
     .flash.anid1 { animation-delay: .1s; }
+    .scroll { opacity: 1; }
 } 
 .active.contact {
     .flash { display: none; }

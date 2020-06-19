@@ -1,74 +1,177 @@
 'use strict';
 
-const pages = $('.section');
-let pageIndex;
+// var polys = document.querySelectorAll('polygon,polyline');
+// [].forEach.call(polys,convertPolyToPath);
 
-//opening-section
-let opening = false;
-pages.on('click', function () {
-    if (opening) return;
-    opening = true;
+// function convertPolyToPath(poly){
+//   var svgNS = poly.ownerSVGElement.namespaceURI;
+//   var path = document.createElementNS(svgNS,'path');
+//   var pathdata = 'M '+poly.getAttribute('points');
+//   if (poly.tagName=='polygon') pathdata+='z';
+//   path.setAttribute('d',pathdata);
+//   poly.parentNode.replaceChild(path,poly);
+// }
 
-    const others = pages.not(this).children();
-    const clicked_page = $(this);
-    pageIndex = clicked_page.index();
-    
+$(document).ready(function () {
+    const hueArray = getHue();
+    const pages = $('.section');
+    setHue(hueArray);
+    setHeight(pages);
+    Splitting();
+    const hexagon_box = $('#eyecatch .hexagon_box');
+    setEyecatch(hexagon_box);
+    screenChange(hexagon_box, pages);
+    openSection(pages);
+    stopOpen();
 
-    if (clicked_page.hasClass('active')) {
-
-        if(pageIndex === 1) setImgBox(clicked_page, 0);
-
-        clicked_page.removeClass('active');
-        clicked_page.stop().animate({ scrollTop: 0 }, 1000);
-
-
-        setTimeout(() => {
-            closeAnime(pageIndex);
-
-            clicked_page.removeClass('z100');
-            
-            if(pageIndex !== 3) setScroll(clicked_page, 0);
-            
-            others.removeClass('hide');
-
-            opening = false;
-        }, 1000);
-
-    } else {
-        others.addClass('hide');
-        openAnime(pageIndex);
-        
-        setTimeout(() => {
-
-            clicked_page.addClass('active z100');
-
-            if(pageIndex === 1) setImgBox(clicked_page, 1);
-            
-            if(pageIndex !== 3) setScroll(clicked_page, 1);
-            
-            
-            
-            opening = false;
-        }, 1000);
-    }
 })
-//opening-section
+
+function setHeight(pages) {
+    var section_height = $(window).height() / 4;
+    pages.width(section_height); 
+    
+    $(window).resize(function(){
+        var section_height = $(window).height() / 4;
+        pages.width(section_height);  
+    })
+}
+
+function stopOpen() {
+    const el = $('.stop');
+    el.on('click', function(event) {
+        event.stopPropagation();
+    })
+}
+
+function openSection(pages) {
+    let opening = false;
+    pages.on('click', function () {
+        if (opening) return;
+        opening = true;
+
+        const others = pages.not(this).children();
+        const clicked_page = $(this);
+        let pageIndex = clicked_page.index();
+        
+
+        if (clicked_page.hasClass('active')) {
+
+            if(pageIndex === 1) setImgBox(clicked_page, 0);
+            if(pageIndex === 2) setWorkBox(clicked_page, 0);
+
+            clicked_page.removeClass('active');
+            clicked_page.stop().animate({ scrollTop: 0 }, 1000);
+            setHeight(pages);
+
+            setTimeout(() => {
+                closeAnime(pageIndex);
+
+                clicked_page.removeClass('z100');
+                
+                if(pageIndex !== 3) setScroll(clicked_page, 0);
+                
+                others.removeClass('hide');
+
+            }, 1000);
+
+        } else {
+            others.addClass('hide');
+            openAnime(pageIndex);
+            
+            setTimeout(() => {
+
+                clicked_page.addClass('active z100');
+                pages.width('100vw');
+
+                if(pageIndex === 1) setImgBox(clicked_page, 1);
+                if(pageIndex === 2) setWorkBox(clicked_page, 1);
+                if(pageIndex !== 3) setScroll(clicked_page, 1);
+                
+                
+            }, 1000);
+        }
+        opening = false;
+        animeOnScroll(pageIndex, pages);
+    })
+}
 
 
-//setting-section
-function setSections() {
+function animeFromRect() {
+    anime({
+        targets: '.section_num .rect polygon',
+        points: "34.2,48.4 30,50.6 25,51 12,51 6.6,50.4 3,48 1,45 0,39 0,12 0.8,7 3,3 7,0.6 12,0 26,0 31,0.8 34.6,3 36.6,7 37,12 37,39 36.4,44.8 ",
+        easing: 'easeOutQuad',
+        duration: 1000,
+        loop: false
+    });
+}
+
+function animeToRect() {
+    anime({
+        targets: '.section_num .rect polygon',
+        points: "42,87.3 34.9,87.2 28.4,87.1 13.6,87 6.6,86.9 0,86.8 2.1,76.4 4.2,66.4 13.5,20.4 16,8.6 17.7,0 24.5,0.1 32.1,0.2 47.3,0.3 53.4,0.4 59.7,0.5 57.9,9.3 55.6,20.9 46.5,65.6 44.5,75.4 ",
+        easing: 'easeOutQuad',
+        duration: 1000,
+        loop: false
+    });
+    anime({
+        targets: '.section_num .rect polygon',
+        strokeDashoffset: [anime.setDashoffset, 0],
+        easing: 'linear',
+        duration: 1000,
+        delay: function (el, i, l) {
+            return i * 200;
+        },
+        loop: true
+    });
+}
+
+function animeFromTriangle() {
+    anime({
+        targets: '.section_num .work_triangle polygon',
+        points: "36.8,39 36.8,12 35.8,6 33.8,3 30.2,0.6 24.8,0 11.8,0 6.8,0.4 2.8,2.5 0.4,6.1 0,12 0,39 0.2,44 2.2,48 5.8,50.2 10.8,51 24.8,51 29.8,50.4 33.8,48 36,44 ",
+        easing: 'easeOutQuad',
+        duration: 1000,
+        loop: false
+    });
+}
+function animeToTriangle() {
+    anime({
+        targets: '.section_num .work_triangle polygon',
+        points: "53.7,31 47,27.1 40.5,23.4 32.7,18.9 26.5,15.3 20,11.6 12.9,7.4 6.8,3.9 0,0 0,11.6 0,17.5 0,44.5 0,50 0,62 6,58.6 10.9,55.7 18.3,51.4 26.4,46.8 34.1,42.3 43.5,36.9 ",
+        easing: 'easeOutQuad',
+        duration: 1000,
+        loop: false
+    });
+}
+
+function setWorkBox(clicked_page, isEnter) {
+    const section_num = clicked_page.find('.section_num');
+    const up_distance = $(window).height() * 2 / 3;
+    
+    if(isEnter) {
+        section_num.css('transform', `translate(12%, -${up_distance}px)`);
+    } 
+    else {
+        section_num.css('transform', `translateX(100%) rotateZ(-90deg)`);
+    }
+}
+
+
+
+
+
+
+
+
+function setSections(pages) {
     pages.each(function (index) {
         setTimeout(() => {
             $(this).addClass('reveal');
         }, 1000 + 100 * index);
     })
 }
-//setting-section
 
-
-
-
-//hue
 function getHue() {
     const hues = [
         ['89, 57, 233', '22, 3, 109', '6, 1, 31', '9, 2, 48'],
@@ -87,16 +190,13 @@ function setHue(hueArray) {
     root.css('--main-black-grad', `rgb(${hueArray[3]})`);
 }
 
-//hue
-
-//set-scroll
 function setScroll(clicked_page, isEnter) {
     const dammy = '.dammy_height';
     if(isEnter) {
         clicked_page.find(dammy).addClass('scrollable');
         clicked_page.niceScroll(dammy, {
             scrollspeed: 50,
-            mousescrollstep: 30,
+            mousescrollstep: 10,
             touchbehavior: true,
         });
     } else {
@@ -104,10 +204,6 @@ function setScroll(clicked_page, isEnter) {
     }
     clicked_page.getNiceScroll().resize();
 }
-//set-scroll
-
-
-//about
 
 function setImgBox(clicked_page, isEnter) {
     const section_num = clicked_page.find('.section_num');
@@ -122,139 +218,99 @@ function setImgBox(clicked_page, isEnter) {
     
 }
 
+function setEyecatch(hexagon_box) {
 
+    const jiguzagu_show = 1000;
+    const jiguzagu_dur = 2000;
+    const hexagon_circle_show = jiguzagu_show + jiguzagu_dur;
+    const start_line_show = 9000;
 
-//about
-
-
-
-
-
-
-
-
-$(document).ready(function () {
-    const hueArray = getHue();
-    setHue(hueArray);
-    Splitting();
-    animeOnScroll();
-
-})
-
-
-
-//jiguzagu
-
-// var polys = document.querySelectorAll('polygon,polyline');
-// [].forEach.call(polys,convertPolyToPath);
-
-// function convertPolyToPath(poly){
-//   var svgNS = poly.ownerSVGElement.namespaceURI;
-//   var path = document.createElementNS(svgNS,'path');
-//   var pathdata = 'M '+poly.getAttribute('points');
-//   if (poly.tagName=='polygon') pathdata+='z';
-//   path.setAttribute('d',pathdata);
-//   poly.parentNode.replaceChild(path,poly);
-// }
-
-const jiguzagu_show = 1000;
-const jiguzagu_dur = 2000;
-const hexagon_circle_show = jiguzagu_show + jiguzagu_dur;
-const start_line_show = 9000;
-
-const jiguzagu_box = $('#main_container #eyecatch .jiguzagu_box');
-anime({
-    targets: '#eyecatch .jiguzagu',
-    strokeDashoffset: [anime.setDashoffset, -2200],
-    easing: 'easeInOutSine',
-    duration: jiguzagu_dur,
-    loop: true,
-    delay: function (el, i, l) {
-        return jiguzagu_show + i * 100;
-    },
-    endDelay: function (el, i, l) {
-        return i * 100;
-    },
-    keyframes: [
-        { opacity: 1 }, { opacity: 1 }, { opacity: 1 }, { opacity: 1 }, { opacity: 1 },
-        { opacity: 1 }, { opacity: 1 }, { opacity: 1 }, { opacity: 1 }, { opacity: 0 },
-    ],
-});
-
-//jiguzagu
-
-//hexagon
-const hexagon_box = $('#eyecatch .hexagon_box');
-setTimeout(() => {
-    hexagon_box.show();
+    //jiguzagu
     anime({
-        targets: '#eyecatch .hexagon_box_top .hexagon',
-        strokeDashoffset: [anime.setDashoffset, 0],
-        easing: 'linear',
-        duration: 5000,
+        targets: '#eyecatch .jiguzagu',
+        strokeDashoffset: [anime.setDashoffset, -2200],
+        easing: 'easeInOutSine',
+        duration: jiguzagu_dur,
         loop: true,
-        direction: 'normal',
         delay: function (el, i, l) {
-            return i * 600;
+            return jiguzagu_show + i * 100;
+        },
+        endDelay: function (el, i, l) {
+            return i * 100;
         },
         keyframes: [
-            { opacity: 1 }, { opacity: 0 }, { opacity: 1 }, { opacity: 0 },
+            { opacity: 1 }, { opacity: 1 }, { opacity: 1 }, { opacity: 1 }, { opacity: 1 },
+            { opacity: 1 }, { opacity: 1 }, { opacity: 1 }, { opacity: 1 }, { opacity: 0 },
         ],
     });
+    //jiguzagu
+
+    //hexagon
+    setTimeout(() => {
+        hexagon_box.show();
+        anime({
+            targets: '#eyecatch .hexagon_box_top .hexagon',
+            strokeDashoffset: [anime.setDashoffset, 0],
+            easing: 'linear',
+            duration: 5000,
+            loop: true,
+            direction: 'normal',
+            delay: function (el, i, l) {
+                return i * 600;
+            },
+            keyframes: [
+                { opacity: 1 }, { opacity: 0 }, { opacity: 1 }, { opacity: 0 },
+            ],
+        });
+        anime({
+            targets: '#eyecatch .hexagon_box_bottom .hexagon',
+            strokeDashoffset: [anime.setDashoffset, 0],
+            easing: 'linear',
+            duration: 5000,
+            loop: true,
+            direction: 'normal',
+            delay: function (el, i, l) {
+                return i * 600;
+            },
+            keyframes: [
+                { opacity: 1 }, { opacity: 0 }, { opacity: 1 }, { opacity: 0 },
+            ],
+        });
+    }, hexagon_circle_show);
+    //hexagon
+
+    //circle
     anime({
-        targets: '#eyecatch .hexagon_box_bottom .hexagon',
+        targets: '#eyecatch .circle',
         strokeDashoffset: [anime.setDashoffset, 0],
-        easing: 'linear',
-        duration: 5000,
-        loop: true,
-        direction: 'normal',
+        easing: 'easeInOutSine',
+        duration: 500,
+        loop: false,
         delay: function (el, i, l) {
-            return i * 600;
+            return hexagon_circle_show + i * 200;
         },
-        keyframes: [
-            { opacity: 1 }, { opacity: 0 }, { opacity: 1 }, { opacity: 0 },
-        ],
     });
-}, hexagon_circle_show);
-//hexagon
+    //circle
 
-
-//circle
-const circle_box = $('#main_container #eyecatch .circle_box');
-anime({
-    targets: '#eyecatch .circle',
-    strokeDashoffset: [anime.setDashoffset, 0],
-    easing: 'easeInOutSine',
-    duration: 500,
-    loop: false,
-    delay: function (el, i, l) {
-        return hexagon_circle_show + i * 200;
-    },
-});
-
-//circle
-
-
-//start
-const start_box = $('#main_container #eyecatch .start_box');
-anime({
-    targets: '#eyecatch .start_box .start_line',
-    strokeDashoffset: [anime.setDashoffset, 0],
-    easing: 'easeInOutSine',
-    duration: 300,
-    loop: false,
-    direction: 'normal',
-    delay: start_line_show,
-});
-
-//start
- 
-
+    //start
+    anime({
+        targets: '#eyecatch .start_box .start_line',
+        strokeDashoffset: [anime.setDashoffset, 0],
+        easing: 'easeInOutSine',
+        duration: 300,
+        loop: false,
+        direction: 'normal',
+        delay: start_line_show,
+    });
+    //start
+}
 
 function closeAnime(index) {
 
     if(index === 0) animeFromGear();
     if(index === 1) animeFromHex();
+    if(index === 2) animeFromTriangle();
+    if(index === 3) animeFromRect();
    
     anime({
         targets: '.section_num .active_none',
@@ -272,6 +328,8 @@ function openAnime(index) {
     setTimeout(() => {
         if(index === 0) animeToGear();
         if(index === 1) animeToHex();
+        if(index === 2) animeToTriangle();
+        if(index === 3) animeToRect();
     }, 1000);
  
     anime({
@@ -285,9 +343,6 @@ function openAnime(index) {
     });
 }
 
-
-
-//gear
 function animeFromGear() {
     anime({
         targets: '.section_num .small_gear polygon',
@@ -304,6 +359,7 @@ function animeFromGear() {
         loop: false
     });
 }
+
 function animeToGear() {
     anime({
         targets: '.section_num .small_gear polygon',
@@ -320,9 +376,7 @@ function animeToGear() {
         loop: false
     });
 }
-//gear
 
-//hex
 function animeFromHex() {
     anime({
         targets: '.section_num .myimg_box_bg polygon',
@@ -339,6 +393,7 @@ function animeFromHex() {
         loop: false
     });
 }
+
 function animeToHex() {
     anime({
         targets: '.section_num .myimg_box_bg polygon',
@@ -355,56 +410,43 @@ function animeToHex() {
         loop: false
     });
 }
-//hex
 
+function screenChange(hexagon_box, pages) {
+    let isOpening = false;
+    const click_to_start = $('#main_container #eyecatch .click_to_start');
+    click_to_start.on('click', function () {
+        if (isOpening) return;
+        isOpening = true;
+        const circle_hide_time = 500;
+        const circle_box = $('#main_container #eyecatch .circle_box');
+        const screen_change_hide = $('#main_container #eyecatch .screen_change_hide');
+        
+        anime({
+            targets: '#eyecatch .circle',
+            strokeDashoffset: [0, anime.setDashoffset],
+            easing: 'easeInOutSine',
+            duration: circle_hide_time,
+            direction: 'normal',
+            loop: false,
+        });
+        setTimeout(() => { circle_box.hide(); }, circle_hide_time);
+        screen_change_hide.addClass('hide');
+        hexagon_box.addClass('hide');
+        $('#main_container .screen_hidden').removeClass('screen_hidden');
+        setSections(pages);
+        setTimeout(() => {
+            $('#main_container #eyecatch').remove();
+        }, 2000);
+    })
+}
 
-
-
-
-
-
-
-//screen-change
-let isOpening = false;
-const click_to_start = $('#main_container #eyecatch .click_to_start');
-click_to_start.on('click', function () {
-    if (isOpening) return;
-    isOpening = true;
-    const circle_hide_time = 500;
-    const title_box = $('#main_container #eyecatch .title_box');
-    const jiguzagu_box = $('#main_container #eyecatch .jiguzagu_box');
-
-    anime({
-        targets: '#eyecatch .circle',
-        strokeDashoffset: [0, anime.setDashoffset],
-        easing: 'easeInOutSine',
-        duration: circle_hide_time,
-        direction: 'normal',
-        loop: false,
-    });
-    setTimeout(() => { circle_box.hide(); }, circle_hide_time);
-    jiguzagu_box.addClass('hide');
-    hexagon_box.addClass('hide');
-    title_box.addClass('hide');
-    start_box.addClass('hide');
-    $('#main_container .screen_hidden').removeClass('screen_hidden');
-    setSections();
-    setTimeout(() => {
-        $('#main_container #eyecatch').remove();
-    }, 2000);
-})
-//screen-change
-
-
-
-function animeOnScroll() {
+function animeOnScroll(pageIndex, pages) {
 
     pages.on('scroll', function () {
 
         let scroll = $(this).scrollTop();
-        pageIndex = $(this).index();
 
-        if (scroll > 8000) $(this).click();
+        // if (scroll > 8000) $(this).click();
 
         anime.set('.leftline_brightness', {
             values: scroll / 5000,
@@ -418,8 +460,8 @@ function animeOnScroll() {
             // let frag_scroll = scroll - frag_fire_point;
             // let frag_value = frag_scroll < 0 ? 0 : frag_scroll / 20;
 
-            const small_gear = $('.section_num .small_gear');
-            const big_gear = $('.section_num .big_gear');
+            const small_gear = $('.concept .section_num .small_gear');
+            const big_gear = $('.concept .section_num .big_gear');
             
             small_gear.css('transform', `translate(${scroll / 700}%, -${scroll / 500}%) rotate(${scroll  / 6.46}deg)`);
             big_gear.css('transform', `rotate(-${scroll / 10}deg)`);
@@ -476,6 +518,56 @@ function animeOnScroll() {
         }
         //concept  
 
+        if(pageIndex === 2) {
+            // const tri_show_points = [];
+            const content_tri = $('.works .section_num .content_tri');
+            // for(let i = 0; i < content_tri.length; i++) tri_show_points.push(1000 + i * 1000);
+            // tri_show_points.forEach((point, index) => {
+                let renge = Math.floor(scroll / 1000);
+                // let value = scroll % 1000; 
+                let tran_value = scroll * 13.8 / 100;
+                let rot_value = scroll * 18 / 100;
+                let rot_value2 = 180 - rot_value;
+                console.log(tran_value);
+                content_tri.css({
+                    'transform': `translateY(${tran_value}%)  
+                                    rotateX(${rot_value2}deg) rotateY(-${rot_value2}deg)`,
+                });
+                // switch (renge) {
+                //     case 0:
+                //         content_tri.css({
+                //             'transform': `translateY(${tran_value}%)  
+                //                           rotateX(${rot_value_abs}deg) rotateY(-${rot_value_abs}deg)`,
+                //         });
+                //         break;
+                //     case 1:
+                //         for(let i = 0; i < renge; i++) {
+                //             $('.works .section_num .content_tri').not(`:eq(${i})`).css({
+                //                 'transform': `translateY(${tran_value}%)  
+                //                               rotateX(${rot_value_abs}deg) rotateY(-${rot_value_abs}deg)`,
+                //             });
+                //         }
+                //         break;
+                //     case 2:
+                //         for(let i = 0; i < renge; i++) {
+                //             content_tri.not(`:eq(${i})`).css({
+                //                 'transform': `translateY(${tran_value}%)  
+                //                               rotateX(${rot_value_abs}deg) rotateY(-${rot_value_abs}deg)`,
+                //             });
+                //         }
+                //         break;
+                //     case 3:
+                //         for(let i = 0; i < renge; i++) {
+                //             content_tri.not(`:eq(${i})`).css({
+                //                 'transform': `translateY(${tran_value}%)  
+                //                               rotateX(${rot_value_abs}deg) rotateY(-${rot_value_abs}deg)`,
+                //             });
+                //         }
+                //         break;
+                // }
+            // })
+            
+        }
 
 
 
