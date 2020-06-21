@@ -62,13 +62,15 @@
 .active.works {
     .section_num { width: 80%; opacity: 1; }
     .work_triangle { width: 45%; }
-    .work_triangle.tri2 { transform: translateX(-120%) rotateX(180deg) rotateY(180deg); }
-    .work_triangle.content_tri, .work_triangle.tri2 { transform-origin: 72% 95%; }
-    
+    .tri1, .tri2 { opacity: .7; }
+    .work_triangle.tri2 { transform: translate(-120%, 95%) rotateX(180deg) rotateY(180deg); }
+    .work_triangle.content_tri, .work_triangle.tri2 { transform-origin: 72% center; }
+    .content_tri { transform: translate(0%, 95%) rotateX(180deg) rotateY(180deg); }
+    .content_tri2 { transform: translate(0%, 147%) rotateX(0deg) rotateY(0deg); }
+    .content_tri3 { transform: translate(0%, 242%) rotateX(180deg) rotateY(180deg); }
+    .content_tri4 { transform: translate(0%, 294%) rotateX(0deg) rotateY(0deg); }
 } 
-
-.content_tri { transform: translateX(0) rotateX(180deg) rotateY(180deg);opacity: 0.3; }
-
+.content_tri, .work_img { opacity: 0; }
 
 
 

@@ -23,6 +23,7 @@ $(document).ready(function () {
     screenChange(hexagon_box, pages);
     openSection(pages);
     stopOpen();
+    preventLink();
 
 })
 
@@ -40,6 +41,12 @@ function stopOpen() {
     const el = $('.stop');
     el.on('click', function(event) {
         event.stopPropagation();
+    })
+}
+function preventLink() {
+    const el = $('.prevent');
+    el.on('click', function(event) {
+        event.preventDefault();
     })
 }
 
@@ -89,9 +96,9 @@ function openSection(pages) {
                 
                 
             }, 1000);
+            animeOnScroll(pageIndex, pages);
         }
         opening = false;
-        animeOnScroll(pageIndex, pages);
     })
 }
 
@@ -148,12 +155,19 @@ function animeToTriangle() {
 function setWorkBox(clicked_page, isEnter) {
     const section_num = clicked_page.find('.section_num');
     const up_distance = $(window).height() * 2 / 3;
-    
+    const content_tri = $('.works .section_num .content_tri');
+    const work_img = $('.work_img');
     if(isEnter) {
         section_num.css('transform', `translate(12%, -${up_distance}px)`);
+        work_img.removeClass('dn').addClass('db');
+        setTimeout(() => { work_img.addClass('show') }, 1000);
     } 
     else {
-        section_num.css('transform', `translateX(100%) rotateZ(-90deg)`);
+        section_num.removeAttr('style');
+        section_num.css('transform', `translate(100%) rotateZ(-90deg)`);
+        content_tri.attr('style', 'overflow:visible;enable-background:new 0 0 36.8 51;');
+        work_img.removeClass('show');
+        setTimeout(() => { work_img.removeClass('db').addClass('dn') }, 1000);
     }
 }
 
@@ -446,7 +460,7 @@ function animeOnScroll(pageIndex, pages) {
 
         let scroll = $(this).scrollTop();
 
-        // if (scroll > 8000) $(this).click();
+        // if (scroll > 7000) setTimeout(() => { $(this).click(); }, 500); 
 
         anime.set('.leftline_brightness', {
             values: scroll / 5000,
@@ -456,124 +470,71 @@ function animeOnScroll(pageIndex, pages) {
 
         //concept
         if (pageIndex === 0) {
-            // const frag_fire_point = 5000;
-            // let frag_scroll = scroll - frag_fire_point;
-            // let frag_value = frag_scroll < 0 ? 0 : frag_scroll / 20;
 
             const small_gear = $('.concept .section_num .small_gear');
             const big_gear = $('.concept .section_num .big_gear');
-            
             small_gear.css('transform', `translate(${scroll / 700}%, -${scroll / 500}%) rotate(${scroll  / 6.46}deg)`);
             big_gear.css('transform', `rotate(-${scroll / 10}deg)`);
 
             const concept_title_chars = document.getElementById('concept_title').style.getPropertyValue("--char-total");
             const chars = $('#concept_title .char');
             const firePoints = []; 
-
             for (let i = 0; i < concept_title_chars; i++) firePoints.push(500 + i * 100);    
             firePoints.forEach((firePoint, index) => { 
                 if(firePoint < scroll) chars.eq(index).addClass('show'); 
                 else { chars.eq(index).removeClass('show') }
             });
-
-
-
-            // if (frag_scroll < 0) {
-            // } else {
-            // }
-
-            // for (let i = 1; i < frags.length + 1; i++) {
-            //     let rotateZ_memory = rotateZ_memories[i - 1];
-            //     let index = fragArray[i - 1];
-            //     let frag_memory = frag_value * rotateZ_memory / (i * 2);
-            //     let color_prop;
-            //     if(frag_value == 0) color_prop = 'transparent';
-            //     else {                
-            //         switch (hueNum) {
-            //             case 1:
-            //                 color_prop = `rgba(${57 / (frag_memory / 15)}, ${233 / (frag_memory / 15)}, ${166 / (frag_memory / 15)}, .6)`
-            //                 break;
-            //             case 2:
-            //                 color_prop = `rgba(${233 / (frag_memory / 15)}, ${57 / (frag_memory / 15)}, ${180 / (frag_memory / 15)}, .6)`
-            //                 break;
-            //             default:
-            //                 color_prop = `rgba(${89 / (frag_memory / 15)}, ${57 / (frag_memory / 15)}, ${233 / (frag_memory / 15)}, .6)`
-            //                 break;
-            //         }
-            //     }
-
-            //     if (i % 2 === 0) $(`.concept .frag_wrapper .frag${index}`).css({
-            //         'transform': `${persp} 
-            //                   translate(-${frag_memory}%, ${frag_memory}%)  
-            //                   rotateX(-${frag_memory}deg) rotateY(-${frag_memory}deg)`,
-            //         'border-bottom-color': color_prop
-            //     });
-            //     else $(`.concept .frag_wrapper .frag${index}`).css({
-            //         'transform': `${persp} 
-            //                   translate(${frag_memory}%, ${frag_memory}%) 
-            //                   rotateX(${frag_memory}deg) rotateY(${frag_memory}deg)`,
-            //         'border-bottom-color': color_prop
-            //     });
-            // }
         }
-        //concept  
 
         if(pageIndex === 2) {
-            // const tri_show_points = [];
+            const content_tris = $('.works .section_num');
             const content_tri = $('.works .section_num .content_tri');
-            // for(let i = 0; i < content_tri.length; i++) tri_show_points.push(1000 + i * 1000);
-            // tri_show_points.forEach((point, index) => {
-                let renge = Math.floor(scroll / 1000);
-                // let value = scroll % 1000; 
-                let tran_value = scroll * 13.8 / 100;
-                let rot_value = scroll * 18 / 100;
-                let rot_value2 = 180 - rot_value;
-                console.log(tran_value);
-                content_tri.css({
-                    'transform': `translateY(${tran_value}%)  
-                                    rotateX(${rot_value2}deg) rotateY(-${rot_value2}deg)`,
-                });
-                // switch (renge) {
-                //     case 0:
-                //         content_tri.css({
-                //             'transform': `translateY(${tran_value}%)  
-                //                           rotateX(${rot_value_abs}deg) rotateY(-${rot_value_abs}deg)`,
-                //         });
-                //         break;
-                //     case 1:
-                //         for(let i = 0; i < renge; i++) {
-                //             $('.works .section_num .content_tri').not(`:eq(${i})`).css({
-                //                 'transform': `translateY(${tran_value}%)  
-                //                               rotateX(${rot_value_abs}deg) rotateY(-${rot_value_abs}deg)`,
-                //             });
-                //         }
-                //         break;
-                //     case 2:
-                //         for(let i = 0; i < renge; i++) {
-                //             content_tri.not(`:eq(${i})`).css({
-                //                 'transform': `translateY(${tran_value}%)  
-                //                               rotateX(${rot_value_abs}deg) rotateY(-${rot_value_abs}deg)`,
-                //             });
-                //         }
-                //         break;
-                //     case 3:
-                //         for(let i = 0; i < renge; i++) {
-                //             content_tri.not(`:eq(${i})`).css({
-                //                 'transform': `translateY(${tran_value}%)  
-                //                               rotateX(${rot_value_abs}deg) rotateY(-${rot_value_abs}deg)`,
-                //             });
-                //         }
-                //         break;
-                // }
-            // })
-            
+            const scrollPerTri = 1500;
+            const deciScrollPerTri = scrollPerTri / 10;
+            let opacityProp = scrollPerTri * 10 / 7;
+            let renge = Math.floor(scroll / scrollPerTri);
+            let value = scroll % scrollPerTri; 
+            let tran_value;
+            let rot_value = value * 18 / 150;
+
+            switch (renge) {
+                case 0:
+                    tran_value = value * 5.2 / deciScrollPerTri;
+                    content_tri.eq(renge).css({
+                        'transform': `translateY(${95 + tran_value}%)  
+                                        rotateX(${180 - rot_value}deg) rotateY(-${180 - rot_value}deg)`,
+                        'opacity': `${value / opacityProp}`
+                    });
+                    break;
+                case 1:
+                    tran_value = value * 9.5 / deciScrollPerTri;
+                    content_tris.css('transform', `translate(12%, -${$(window).height() * 2 / 3}px)`)
+                    content_tri.eq(renge).css({
+                        'transform': `translateY(${147 + tran_value}%)  
+                                        rotateX(${rot_value}deg) rotateY(-${rot_value}deg)`,
+                        'opacity': `${value / opacityProp}`
+                    });
+                    break;
+                case 2:
+                    tran_value = value * 5.2 / deciScrollPerTri;
+                    content_tris.css('transform', `translate(12%, -${$(window).height() * 5 / 4}px)`)
+                    content_tri.eq(renge).css({
+                        'transform': `translateY(${242 + tran_value}%)  
+                                        rotateX(${180 - rot_value}deg) rotateY(-${180 - rot_value}deg)`,
+                        'opacity': `${value / opacityProp}`
+                    });
+                    break;
+                case 3:
+                    tran_value = value * 9.5 / deciScrollPerTri;
+                    content_tri.eq(renge).css({
+                        'transform': `translateY(${294 + tran_value}%)  
+                                        rotateX(${rot_value}deg) rotateY(-${rot_value}deg)`,
+                        'opacity': `${value / opacityProp}`
+                    });
+                    break;
+            }            
         }
-
-
-
-
     })
-
 }
 
 
