@@ -6,8 +6,11 @@ html, body {
 
 .tran1 { transition: 1s; }
 .z-20 { z-index: 20; }
-
+.txt-sm { font-size: 72%; }
 .to-lt { transform-origin: left top; }
+.bdbx { box-sizing: border-box; }
+.lh18 { line-height: 1.8; }
+.txt-default { font-size: 150%; }
 
 .cover {
     position: absolute;

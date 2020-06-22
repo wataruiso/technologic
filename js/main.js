@@ -20,6 +20,7 @@ $(document).ready(function () {
     Splitting();
     const hexagon_box = $('#eyecatch .hexagon_box');
     setEyecatch(hexagon_box);
+    mouseStalk();
     screenChange(hexagon_box, pages);
     openSection(pages);
     stopOpen();
@@ -58,13 +59,12 @@ function openSection(pages) {
 
         const others = pages.not(this).children();
         const clicked_page = $(this);
-        let pageIndex = clicked_page.index();
-        
+        let pageIndex = clicked_page.index();        
 
         if (clicked_page.hasClass('active')) {
 
             if(pageIndex === 1) setImgBox(clicked_page, 0);
-            if(pageIndex === 2) setWorkBox(clicked_page, 0);
+            else if(pageIndex === 2) setWorkBox(clicked_page, 0);
 
             clicked_page.removeClass('active');
             clicked_page.stop().animate({ scrollTop: 0 }, 1000);
@@ -89,14 +89,14 @@ function openSection(pages) {
 
                 clicked_page.addClass('active z100');
                 pages.width('100vw');
+                if(pageIndex !== 3) setScroll(clicked_page, 1);
 
                 if(pageIndex === 1) setImgBox(clicked_page, 1);
-                if(pageIndex === 2) setWorkBox(clicked_page, 1);
-                if(pageIndex !== 3) setScroll(clicked_page, 1);
+                else if(pageIndex === 2) setWorkBox(clicked_page, 1);
                 
                 
             }, 1000);
-            animeOnScroll(pageIndex, pages);
+            animeOnScroll(pageIndex, clicked_page);
         }
         opening = false;
     })
@@ -170,13 +170,6 @@ function setWorkBox(clicked_page, isEnter) {
         setTimeout(() => { work_img.removeClass('db').addClass('dn') }, 1000);
     }
 }
-
-
-
-
-
-
-
 
 function setSections(pages) {
     pages.each(function (index) {
@@ -454,11 +447,11 @@ function screenChange(hexagon_box, pages) {
     })
 }
 
-function animeOnScroll(pageIndex, pages) {
+function animeOnScroll(pageIndex, clicked_page) {
 
-    pages.on('scroll', function () {
+    clicked_page.on('scroll', function () {
 
-        let scroll = $(this).scrollTop();
+        let scroll = clicked_page.scrollTop();
 
         // if (scroll > 7000) setTimeout(() => { $(this).click(); }, 500); 
 
@@ -466,9 +459,6 @@ function animeOnScroll(pageIndex, pages) {
             values: scroll / 5000,
         });
         
-
-
-        //concept
         if (pageIndex === 0) {
 
             const small_gear = $('.concept .section_num .small_gear');
@@ -486,7 +476,7 @@ function animeOnScroll(pageIndex, pages) {
             });
         }
 
-        if(pageIndex === 2) {
+        else if(pageIndex === 2) {
             const content_tris = $('.works .section_num');
             const content_tri = $('.works .section_num .content_tri');
             const scrollPerTri = 1500;
@@ -537,4 +527,21 @@ function animeOnScroll(pageIndex, pages) {
     })
 }
 
+function mouseStalk() {
+    const stalker = document.getElementById('stalker');
+    const eyecatch = document.getElementById('eyecatch');
+    eyecatch.addEventListener('mousemove', function (e) {
+        stalker.style.transform = 'translate(' + e.clientX + 'px, ' + e.clientY + 'px)';
+    });
+    
+    const link_els = document.querySelectorAll('.stalk_on');
+    link_els.forEach(link_el => {
+        link_el.addEventListener('mouseover', function (e) {
+            stalker.classList.add('stalker_hover');
+        });
+        link_el.addEventListener('mouseout', function (e) {
+            stalker.classList.remove('stalker_hover');
+        });
+    });
 
+}
