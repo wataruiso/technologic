@@ -3,14 +3,22 @@ html, body {
     color: #fff;
     font-family: 'Electrolize', sans-serif;
 }
+// * { cursor: none; }
+body a:hover { cursor: none; }
 
 .tran1 { transition: 1s; }
 .z-20 { z-index: 20; }
-.txt-sm { font-size: 72%; }
+.txt-sm { font-size: .65rem; }
 .to-lt { transform-origin: left top; }
 .bdbx { box-sizing: border-box; }
+.lh25 { line-height: 2.5; }
 .lh18 { line-height: 1.8; }
-.txt-default { font-size: 150%; }
+.lh15 { line-height: 1.3; }
+.txt-default { font-size: 1.1rem; }
+.txt-transparent { color: transparent; }
+.underline { border-bottom: 1px solid #fff; }
+.w-90vw { width: 90vw !important; }
+.w-100vw { width: 100vw !important; }
 
 .cover {
     position: absolute;

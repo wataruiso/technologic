@@ -53,33 +53,19 @@ function preventLink() {
 
 function openSection(pages) {
     let opening = false;
+
     pages.on('click', function () {
         if (opening) return;
         opening = true;
 
         const others = pages.not(this).children();
         const clicked_page = $(this);
+        const back_to_menu = $('.back_to_menu');
         let pageIndex = clicked_page.index();        
 
         if (clicked_page.hasClass('active')) {
 
-            if(pageIndex === 1) setImgBox(clicked_page, 0);
-            else if(pageIndex === 2) setWorkBox(clicked_page, 0);
-
-            clicked_page.removeClass('active');
-            clicked_page.stop().animate({ scrollTop: 0 }, 1000);
-            setHeight(pages);
-
-            setTimeout(() => {
-                closeAnime(pageIndex);
-
-                clicked_page.removeClass('z100');
-                
-                if(pageIndex !== 3) setScroll(clicked_page, 0);
-                
-                others.removeClass('hide');
-
-            }, 1000);
+            closeSection(pages, pageIndex, clicked_page, back_to_menu, others);
 
         } else {
             others.addClass('hide');
@@ -87,21 +73,56 @@ function openSection(pages) {
             
             setTimeout(() => {
 
-                clicked_page.addClass('active z100');
-                pages.width('100vw');
-                if(pageIndex !== 3) setScroll(clicked_page, 1);
+                clicked_page.addClass('active z100 w-100vw');
+                setScroll(clicked_page, 1);
 
                 if(pageIndex === 1) setImgBox(clicked_page, 1);
                 else if(pageIndex === 2) setWorkBox(clicked_page, 1);
                 
                 
             }, 1000);
-            animeOnScroll(pageIndex, clicked_page);
+            
+            backToMenuClick(pages, pageIndex, clicked_page, back_to_menu, others);
+            animeOnScroll(pageIndex, clicked_page, back_to_menu);
         }
         opening = false;
     })
 }
 
+function closeSection(pages, pageIndex, clicked_page, back_to_menu, others) {
+    if(pageIndex === 0) resetCharClass(clicked_page);
+    else if(pageIndex === 1) setImgBox(clicked_page, 0);
+    else if(pageIndex === 2) setWorkBox(clicked_page, 0);
+
+    back_to_menu.removeClass('z100 back_to_menu_active');
+    clicked_page.removeClass('active w-100vw w-90vw');
+    clicked_page.stop().animate({ scrollTop: 0 }, 1000);
+    setHeight(pages);
+
+    setTimeout(() => {
+        closeAnime(pageIndex);
+
+        clicked_page.removeClass('z100');
+        
+        setScroll(clicked_page, 0);
+        
+        others.removeClass('hide');
+
+    }, 1000);
+}
+
+function backToMenuClick(pages, pageIndex, clicked_page, back_to_menu, others) {
+    back_to_menu.on('click', function(e) {
+        closeSection(pages, pageIndex, clicked_page, back_to_menu, others);
+    })
+}
+
+function resetCharClass(clicked_page) {
+    const content_inner = clicked_page.find('.content_inner');
+    const chars = content_inner.find('.char');
+    chars.removeClass('show');
+    content_inner.find('.txt-sm').addClass('txt-transparent');
+}
 
 function animeFromRect() {
     anime({
@@ -427,7 +448,6 @@ function screenChange(hexagon_box, pages) {
         const circle_hide_time = 500;
         const circle_box = $('#main_container #eyecatch .circle_box');
         const screen_change_hide = $('#main_container #eyecatch .screen_change_hide');
-        
         anime({
             targets: '#eyecatch .circle',
             strokeDashoffset: [0, anime.setDashoffset],
@@ -447,36 +467,55 @@ function screenChange(hexagon_box, pages) {
     })
 }
 
-function animeOnScroll(pageIndex, clicked_page) {
+function animeOnScroll(pageIndex, clicked_page, back_to_menu) {
 
     clicked_page.on('scroll', function () {
 
         let scroll = clicked_page.scrollTop();
+        const pageHeight = clicked_page.find('.dammy_height').height() - 500;
 
-        // if (scroll > 7000) setTimeout(() => { $(this).click(); }, 500); 
-
+        if(pageHeight > 0) {
+            if(pageHeight < scroll) {
+                clicked_page.addClass('w-90vw').removeClass('w-100vw');
+                back_to_menu.addClass('z100 back_to_menu_active');
+            } else {
+                clicked_page.removeClass('w-90vw').addClass('w-100vw');
+                back_to_menu.removeClass('z100 back_to_menu_active');
+            }
+        }
+        
         anime.set('.leftline_brightness', {
             values: scroll / 5000,
         });
         
         if (pageIndex === 0) {
-
             const small_gear = $('.concept .section_num .small_gear');
             const big_gear = $('.concept .section_num .big_gear');
             small_gear.css('transform', `translate(${scroll / 700}%, -${scroll / 500}%) rotate(${scroll  / 6.46}deg)`);
             big_gear.css('transform', `rotate(-${scroll / 10}deg)`);
-
-            const concept_title_chars = document.getElementById('concept_title').style.getPropertyValue("--char-total");
-            const chars = $('#concept_title .char');
-            const firePoints = []; 
-            for (let i = 0; i < concept_title_chars; i++) firePoints.push(500 + i * 100);    
-            firePoints.forEach((firePoint, index) => { 
-                if(firePoint < scroll) chars.eq(index).addClass('show'); 
-                else { chars.eq(index).removeClass('show') }
-            });
+            const concept_chars = document.querySelectorAll('.char_flash');
+            let point = Math.floor(scroll / 100) - 1;
+            concept_chars.forEach(concept_char => {
+                const total_max = concept_char.style.getPropertyValue("--char-total");
+                if(point >= total_max || point < 0) return;
+                else {
+                const chars = concept_char.getElementsByClassName('char');
+                chars[point].classList.add('show'); 
+                }
+            })
+            if(point > 20) $('.txt-transparent').removeClass('txt-transparent');
         }
 
-        else if(pageIndex === 2) {
+        if (pageIndex === 1) {
+            const box1 = $('.txt_box1');
+            let value = (scroll / 10) % 250;
+            
+            if (value <= 100) box1.css('width', `${value}%`);
+            else if (value > 100 && value <= 200) box1.css('width', `${200 - value}%`);
+            else if (value > 200 && value <= 250) box1.css('width', 0);
+        }
+
+        if(pageIndex === 2) {
             const content_tris = $('.works .section_num');
             const content_tri = $('.works .section_num .content_tri');
             const scrollPerTri = 1500;
@@ -529,12 +568,12 @@ function animeOnScroll(pageIndex, clicked_page) {
 
 function mouseStalk() {
     const stalker = document.getElementById('stalker');
-    const eyecatch = document.getElementById('eyecatch');
-    eyecatch.addEventListener('mousemove', function (e) {
-        stalker.style.transform = 'translate(' + e.clientX + 'px, ' + e.clientY + 'px)';
+    document.addEventListener('mousemove', function (e) {
+        stalker.style.transform = 'translate(' + e.clientX + 'px, ' + e.clientY + 'px)'; 
     });
     
     const link_els = document.querySelectorAll('.stalk_on');
+    const click_to_start = document.querySelector('.click_to_start');
     link_els.forEach(link_el => {
         link_el.addEventListener('mouseover', function (e) {
             stalker.classList.add('stalker_hover');

@@ -49,11 +49,19 @@
 }
 .icon { transform: translateX(-350%); }
 
-.concept_title {
-    font-size: 1.2rem;
+.concept .content_inner {
+    .concept_title { font-size: 1.4rem; }
     .char { opacity: 0; }
+    .char_flash { color: #fff; }
 }
 
+
+.about .content_inner {
+    bottom: 0;
+    .txt_box { width: 0; }
+    .txt_box2 { top: 0;left: 0; }
+    .name { font-size: 1.4em; }
+}
 
 .myimg { opacity: 0; }
 .active .myimg { opacity: 1; }
