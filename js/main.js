@@ -52,9 +52,10 @@ function preventLink() {
 }
 
 function openSection(pages) {
-    let opening = false;
+    let opening;
 
     pages.on('click', function () {
+        
         if (opening) return;
         opening = true;
 
@@ -67,7 +68,8 @@ function openSection(pages) {
 
             closeSection(pages, pageIndex, clicked_page, back_to_menu, others);
 
-        } else {
+        } else {    
+            $(document).off("click", others);
             others.addClass('hide');
             openAnime(pageIndex);
             
@@ -79,13 +81,12 @@ function openSection(pages) {
                 if(pageIndex === 1) setImgBox(clicked_page, 1);
                 else if(pageIndex === 2) setWorkBox(clicked_page, 1);
                 
-                
             }, 1000);
             
             backToMenuClick(pages, pageIndex, clicked_page, back_to_menu, others);
             animeOnScroll(pageIndex, clicked_page, back_to_menu);
         }
-        opening = false;
+        setTimeout(() => { opening = false; }, 1000); 
     })
 }
 
@@ -178,6 +179,7 @@ function setWorkBox(clicked_page, isEnter) {
     const up_distance = $(window).height() * 2 / 3;
     const content_tri = $('.works .section_num .content_tri');
     const work_img = $('.work_img');
+    const work_img_after = $('.work_img_after');
     if(isEnter) {
         section_num.css('transform', `translate(12%, -${up_distance}px)`);
         work_img.removeClass('dn').addClass('db');
@@ -188,7 +190,11 @@ function setWorkBox(clicked_page, isEnter) {
         section_num.css('transform', `translate(100%) rotateZ(-90deg)`);
         content_tri.attr('style', 'overflow:visible;enable-background:new 0 0 36.8 51;');
         work_img.removeClass('show');
-        setTimeout(() => { work_img.removeClass('db').addClass('dn') }, 1000);
+        work_img_after.addClass('op0');
+        setTimeout(() => {
+            work_img.removeClass('db').addClass('dn');
+            work_img_after.addClass('dn');
+        }, 1000);
     }
 }
 
@@ -440,11 +446,8 @@ function animeToHex() {
 }
 
 function screenChange(hexagon_box, pages) {
-    let isOpening = false;
     const click_to_start = $('#main_container #eyecatch .click_to_start');
     click_to_start.on('click', function () {
-        if (isOpening) return;
-        isOpening = true;
         const circle_hide_time = 500;
         const circle_box = $('#main_container #eyecatch .circle_box');
         const screen_change_hide = $('#main_container #eyecatch .screen_change_hide');
@@ -484,9 +487,7 @@ function animeOnScroll(pageIndex, clicked_page, back_to_menu) {
             }
         }
         
-        anime.set('.leftline_brightness', {
-            values: scroll / 5000,
-        });
+        anime.set('.leftline_brightness', { values: scroll / 5000, });
         
         if (pageIndex === 0) {
             const small_gear = $('.concept .section_num .small_gear');
@@ -507,12 +508,24 @@ function animeOnScroll(pageIndex, clicked_page, back_to_menu) {
         }
 
         if (pageIndex === 1) {
-            const box1 = $('.txt_box1');
-            let value = (scroll / 10) % 250;
+            const boxes = $('.txt_box');
+            const scrollPerSlide = 2500;
+            let slideRenge = Math.floor(scroll / scrollPerSlide);
+            let value = Math.floor((scroll / 10) % 250);
             
-            if (value <= 100) box1.css('width', `${value}%`);
-            else if (value > 100 && value <= 200) box1.css('width', `${200 - value}%`);
-            else if (value > 200 && value <= 250) box1.css('width', 0);
+            for(let i = 0; i < boxes.length; i++) {
+                if (slideRenge === i) slidePage(slideRenge);
+            }
+
+            function slidePage(slideRenge) {
+                let boxi = $(`.txt_box${slideRenge + 1}`); 
+                $(`.txt_box:not(:eq(${slideRenge}))`).css('width', 0);    
+                if (value <= 100) boxi.css('width', `${value}%`);
+                if (slideRenge !== 2) {
+                    if (value > 100 && value <= 200) boxi.css('width', `${200 - value}%`);
+                    if (value > 200 && value <= 250) boxi.css('width', 0); 
+                }
+            }
         }
 
         if(pageIndex === 2) {
@@ -538,6 +551,7 @@ function animeOnScroll(pageIndex, clicked_page, back_to_menu) {
                 case 1:
                     tran_value = value * 9.5 / deciScrollPerTri;
                     content_tris.css('transform', `translate(12%, -${$(window).height() * 2 / 3}px)`)
+                    showWorkImgAfter(renge);
                     content_tri.eq(renge).css({
                         'transform': `translateY(${147 + tran_value}%)  
                                         rotateX(${rot_value}deg) rotateY(-${rot_value}deg)`,
@@ -547,6 +561,7 @@ function animeOnScroll(pageIndex, clicked_page, back_to_menu) {
                 case 2:
                     tran_value = value * 5.2 / deciScrollPerTri;
                     content_tris.css('transform', `translate(12%, -${$(window).height() * 5 / 4}px)`)
+                    showWorkImgAfter(renge);
                     content_tri.eq(renge).css({
                         'transform': `translateY(${242 + tran_value}%)  
                                         rotateX(${180 - rot_value}deg) rotateY(-${180 - rot_value}deg)`,
@@ -555,13 +570,22 @@ function animeOnScroll(pageIndex, clicked_page, back_to_menu) {
                     break;
                 case 3:
                     tran_value = value * 9.5 / deciScrollPerTri;
+                    showWorkImgAfter(renge);
                     content_tri.eq(renge).css({
                         'transform': `translateY(${294 + tran_value}%)  
                                         rotateX(${rot_value}deg) rotateY(-${rot_value}deg)`,
                         'opacity': `${value / opacityProp}`
                     });
                     break;
-            }            
+                case 4:
+                    showWorkImgAfter(renge);
+                    break;
+            }        
+            
+            function showWorkImgAfter(renge) {
+                content_tri.eq(renge - 1).find('.work_img_after').removeClass('dn op0');
+                content_tri.eq(renge + 1).find('.work_img_after').addClass('prevent');
+            }
         }
     })
 }

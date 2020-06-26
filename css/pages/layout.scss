@@ -1,5 +1,6 @@
 .scrollable { height: 7000px; }
-.concept .scrollable { height: 3000px; }
+.concept .scrollable { height: 3500px; }
+.about .scrollable { height: 7000px; }
 .contact .scrollable { height: 10px; }
 #main_container { background: radial-gradient(var(--main-dark), var(--main-black)); }
 
@@ -19,8 +20,6 @@
 .section { height: 100vw; /*cursor: none !important;*/ }
 .section:before { width: 0; }
 
-.section_inner { opacity: 0; }
-
 .section_content {
     transform-origin: right bottom;
     top: 0;
@@ -29,7 +28,7 @@
 }
 .active .section_content { border: none; }
 
-.content_inner {opacity: 0; width: 100vw;}
+.content_inner {width: 100vw;}
 .contact .content_inner { width: auto; }
 .active .content_inner { opacity: 1; }
 
@@ -106,7 +105,6 @@
     width: var(--stalker-size);
     height: var(--stalker-size);
     background: var(--main);
-    position: fixed;
     top: var(--stalker-position);
     left: var(--stalker-position);
     transition-timing-function: ease-out;

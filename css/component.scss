@@ -79,10 +79,7 @@
 }
 .title {fill: var(--main);} 
 .title_bg { opacity: .1; }
-.eyecatch_title_show {
-    opacity: 0;
-    animation: eyecatchCharShow 2s 6s forwards;
-}
+.eyecatch_title_show { animation: eyecatchCharShow 2s 6s forwards; }
 @keyframes eyecatchCharShow {
     0% {opacity: 0;}
     10% {opacity: .5;}
@@ -103,10 +100,7 @@
 .start_box { right: 50%; top: 50%; transform: translateY(10px); max-width: 220px; }
 .start { fill: var(--main); }
 .start_line {fill: none;stroke:var(--main);stroke-width:.5;stroke-miterlimit:10;}
-.eyecatch_start_show {
-    opacity: 0;
-    animation: show .1s 9.3s forwards;
-}
+.eyecatch_start_show { animation: show .1s 9.3s forwards; }
 @keyframes show {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -118,10 +112,7 @@
 .leftline {
     #g_top { stop-color: var(--main); }
     #g_btm { stop-color: var(--main-dark); }
-    polygon, .scroll {
-        fill: url(#leftline_grad);
-        opacity: 0; 
-    }
+    polygon, .scroll { fill: url(#leftline_grad); }
     .scroll { fill: var(--main); }
 }
 .flash { animation: none; }

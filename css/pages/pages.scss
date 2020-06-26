@@ -55,15 +55,14 @@
     .char_flash { color: #fff; }
 }
 
-
 .about .content_inner {
-    bottom: 0;
+    bottom: 0;height: 50%;
     .txt_box { width: 0; }
-    .txt_box2 { top: 0;left: 0; }
+    .txt_box2, .txt_box3 { top: 0;left: 0; }
     .name { font-size: 1.4em; }
+    .txt_box3 .name { padding: 1.4rem 0; }
 }
 
-.myimg { opacity: 0; }
 .active .myimg { opacity: 1; }
 .active .myimg_base { opacity: 0; }
 
@@ -77,10 +76,13 @@
     .content_tri2 { transform: translate(0%, 147%) rotateX(0deg) rotateY(0deg); }
     .content_tri3 { transform: translate(0%, 242%) rotateX(180deg) rotateY(180deg); }
     .content_tri4 { transform: translate(0%, 294%) rotateX(0deg) rotateY(0deg); }
+    //comingsoon
+    .work_img_after {
+        polygon { fill: #808080; }
+        .cs path { fill: #fff; }
+    }
+    //comingsoon
 } 
-.content_tri, .work_img { opacity: 0; }
-
-
 
 .active.contact {
     .section_num { width: 180%;transform: translate(10%, 10%); }
