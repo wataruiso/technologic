@@ -50,9 +50,12 @@
 .icon { transform: translateX(-350%); }
 
 .concept .content_inner {
-    .concept_title { font-size: 1.4rem; }
+    z-index: 1;
+    .concept_title { font-size: 1.5rem; }
     .char { opacity: 0; }
     .char_flash { color: #fff; }
+    .txt-default { font-size: 1.2rem; }
+    .txt-sm { font-size: .7rem; }
 }
 
 .about .content_inner {
