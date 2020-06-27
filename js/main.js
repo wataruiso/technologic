@@ -16,7 +16,7 @@ $(document).ready(function () {
     const hueArray = getHue();
     const pages = $('.section');
     setHue(hueArray);
-    setHeight(pages);
+    if($(window).width() < 896) setHeight(pages);
     Splitting();
     const hexagon_box = $('#eyecatch .hexagon_box');
     setEyecatch(hexagon_box);

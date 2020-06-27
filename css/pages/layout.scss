@@ -96,7 +96,7 @@
 
 @media screen and (min-width: 896px) {
 
-    //stalker
+//stalker
 #stalker {
     --stalker-size: 10px;
     --stalker-position: -5px;
@@ -122,23 +122,23 @@
 }
 //stalker
 
-    // .section {
-    //     width: 100vh;
-    //     height: calc(100vw / 4);
-    // }
-    // .about { transform: rotateZ(90deg) translateY(-200%); }
-    // .works { transform: rotateZ(90deg) translateY(-300%); }
-    // .contact { transform: rotateZ(90deg) translateY(-400%); }
+    .section {
+        width: 100vh;
+        height: calc(100vw / 4);
+    }
+    .about { transform: rotateZ(90deg) translateY(-200%); }
+    .works { transform: rotateZ(90deg) translateY(-300%); }
+    .contact { transform: rotateZ(90deg) translateY(-400%); }
     // .about { transform: none; }
     // .works { transform: none; }
     // .contact { transform: none; }
-    // @keyframes revealerIn {
-    //     0% { transform: translateX(-100%); }
-    //     100% { transform: translateX(0%); }
-    // }
-    // @keyframes revealerOut {
-    //     0% { transform: translateX(0%); }
-    //     100% { transform: translateX(100%); }
-    // }
-    // .screen_hidden { transform: translateY(100%); }
+    @keyframes revealerIn {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(0%); }
+    }
+    @keyframes revealerOut {
+        0% { transform: translateX(0%); }
+        100% { transform: translateX(100%); }
+    }
+    .screen_hidden { transform: translateY(100%); }
 }
