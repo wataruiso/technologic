@@ -92,21 +92,19 @@ function openSection(pages) {
 }
 
 function closeSection(pages, pageIndex, clicked_page, back_to_menu, others) {
+    setScroll(clicked_page, 0);
     if(pageIndex === 0) resetCharClass(clicked_page);
     else if(pageIndex === 1) setImgBox(clicked_page, 0);
     else if(pageIndex === 2) setWorkBox(clicked_page, 0);
 
     back_to_menu.removeClass('z100 back_to_menu_active');
     clicked_page.removeClass('active w-100vw w-90vw');
-    clicked_page.stop().animate({ scrollTop: 0 }, 1000);
-    setHeight(pages);
+    if($(window).width() < 896) setHeight(pages);
 
     setTimeout(() => {
         closeAnime(pageIndex);
 
         clicked_page.removeClass('z100');
-        
-        setScroll(clicked_page, 0);
         
         others.removeClass('hide');
 
