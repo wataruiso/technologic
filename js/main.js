@@ -44,6 +44,7 @@ function stopOpen() {
         event.stopPropagation();
     })
 }
+
 function preventLink() {
     const el = $('.prevent');
     el.on('click', function(event) {
@@ -164,6 +165,7 @@ function animeFromTriangle() {
         loop: false
     });
 }
+
 function animeToTriangle() {
     anime({
         targets: '.section_num .work_triangle polygon',
