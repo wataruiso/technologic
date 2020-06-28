@@ -1,9 +1,11 @@
 html, body {
+    cursor: none;
     height: 100%;
     color: #fff;
     font-family: 'Electrolize', sans-serif;
 }
-body a:hover { cursor: none; }
+a { cursor: none !important; }
+.nicescroll-cursors { cursor: none; }
 
 .tran1 { transition: 1s; }
 .z-20 { z-index: 20; }
@@ -18,8 +20,8 @@ body a:hover { cursor: none; }
 .txt-default { font-size: 1.1rem; }
 .txt-transparent { color: transparent; }
 .underline { border-bottom: 1px solid #fff; }
-.w-90vw { width: 90vw !important; }
-.w-100vw { width: 100vw !important; }
+.w-90-important { width: 90% !important; }
+.w-100-important { width: 100% !important; }
 
 .cover {
     position: absolute;
@@ -43,5 +45,11 @@ body a:hover { cursor: none; }
     .d-md-block { display: block; } 
 }
 
-
-
+@media screen and (min-width: 768px) {
+.pt-90 {padding-top: 150px !important;}
+.pl-90 {padding-left: 200px !important;}
+.pr-10 {padding-right: 10% !important;}
+}
+@media screen and (min-width: 896px) {
+.pl-90 {padding-left: 230px !important;}
+}

@@ -11,12 +11,15 @@
 //   path.setAttribute('d',pathdata);
 //   poly.parentNode.replaceChild(path,poly);
 // }
+const windowHeight = $(window).height();
+let is_sp = $(window).width() < 896;
+let is_tab = $(window).width() >= 768 && is_sp;
 
 $(document).ready(function () {
     const hueArray = getHue();
     const pages = $('.section');
     setHue(hueArray);
-    if($(window).width() < 896) setHeight(pages);
+    if(is_sp) setHeight(pages);
     Splitting();
     const hexagon_box = $('#eyecatch .hexagon_box');
     setEyecatch(hexagon_box);
@@ -76,7 +79,7 @@ function openSection(pages) {
             
             setTimeout(() => {
 
-                clicked_page.addClass('active z100 w-100vw');
+                clicked_page.addClass('active z100 w-100-important');
                 setScroll(clicked_page, 1);
 
                 if(pageIndex === 1) setImgBox(clicked_page, 1);
@@ -98,8 +101,8 @@ function closeSection(pages, pageIndex, clicked_page, back_to_menu, others) {
     else if(pageIndex === 2) setWorkBox(clicked_page, 0);
 
     back_to_menu.removeClass('z100 back_to_menu_active');
-    clicked_page.removeClass('active w-100vw w-90vw');
-    if($(window).width() < 896) setHeight(pages);
+    clicked_page.removeClass('active w-100-important w-90-important');
+    if(is_sp) setHeight(pages);
 
     setTimeout(() => {
         closeAnime(pageIndex);
@@ -176,7 +179,8 @@ function animeToTriangle() {
 
 function setWorkBox(clicked_page, isEnter) {
     const section_num = clicked_page.find('.section_num');
-    const up_distance = $(window).height() * 2 / 3;
+    const up_distance = is_sp ? windowHeight * 2 / 3 : windowHeight * 3 / 5;
+
     const content_tri = $('.works .section_num .content_tri');
     const work_img = $('.work_img');
     const work_img_after = $('.work_img_after');
@@ -187,7 +191,8 @@ function setWorkBox(clicked_page, isEnter) {
     } 
     else {
         section_num.removeAttr('style');
-        section_num.css('transform', `translate(100%) rotateZ(-90deg)`);
+        if(is_sp) section_num.css('transform', `translateX(100%) rotateZ(-90deg)`);
+        
         content_tri.attr('style', 'overflow:visible;enable-background:new 0 0 36.8 51;');
         work_img.removeClass('show');
         work_img_after.addClass('op0');
@@ -199,11 +204,15 @@ function setWorkBox(clicked_page, isEnter) {
 }
 
 function setSections(pages) {
-    pages.each(function (index) {
-        setTimeout(() => {
-            $(this).addClass('reveal');
-        }, 1000 + 100 * index);
-    })
+    if(is_sp) {
+        pages.each(function (index) {
+            setTimeout(() => {
+                $(this).addClass('reveal');
+            }, 1000 + 100 * index);
+        })
+    } else {
+        setTimeout(() => { pages.addClass('reveal');}, 1000);
+    }
 }
 
 function getHue() {
@@ -232,6 +241,8 @@ function setScroll(clicked_page, isEnter) {
             scrollspeed: 50,
             mousescrollstep: 10,
             touchbehavior: true,
+            grabcursorenabled: false,
+            autohidemode: 'cursor',
         });
     } else {
         clicked_page.find(dammy).removeClass('scrollable');
@@ -241,13 +252,18 @@ function setScroll(clicked_page, isEnter) {
 
 function setImgBox(clicked_page, isEnter) {
     const section_num = clicked_page.find('.section_num');
-    const up_distance = $(window).height() * 2 / 3 - 60;
-    
+    const up_distance = is_sp ? windowHeight * 2 / 3 - 60 : windowHeight / 2;
+    let imgPosX;
+    if(is_tab) imgPosX = -5;
+    else if(is_sp) imgPosX = 12;
+    else imgPosX = -25;
+
     if(isEnter) {
-        section_num.css('transform', `translate(12%, -${up_distance}px)`);
+        section_num.css('transform', `translate(${imgPosX}%, -${up_distance}px)`);
     } 
     else {
-        section_num.css('transform', `translateX(100%) rotateZ(-90deg)`);
+        section_num.removeAttr('style');
+        if(is_sp) section_num.css('transform', `translateX(100%) rotateZ(-90deg)`);
     }
     
 }
@@ -475,14 +491,15 @@ function animeOnScroll(pageIndex, clicked_page, back_to_menu) {
     clicked_page.on('scroll', function () {
 
         let scroll = clicked_page.scrollTop();
-        const pageHeight = clicked_page.find('.dammy_height').height() - 500;
+        const scrollGap = is_sp && !is_tab ? 500 : 1000;
+        const pageHeight = clicked_page.find('.dammy_height').height() - scrollGap;
 
         if(pageHeight > 0) {
             if(pageHeight < scroll) {
-                clicked_page.addClass('w-90vw').removeClass('w-100vw');
+                clicked_page.addClass('w-90-important').removeClass('w-100-important');
                 back_to_menu.addClass('z100 back_to_menu_active');
             } else {
-                clicked_page.removeClass('w-90vw').addClass('w-100vw');
+                clicked_page.removeClass('w-90-important').addClass('w-100-important');
                 back_to_menu.removeClass('z100 back_to_menu_active');
             }
         }
@@ -550,7 +567,8 @@ function animeOnScroll(pageIndex, clicked_page, back_to_menu) {
                     break;
                 case 1:
                     tran_value = value * 9.5 / deciScrollPerTri;
-                    content_tris.css('transform', `translate(12%, -${$(window).height() * 2 / 3}px)`)
+                    const up_distance = is_sp ? windowHeight * 2 / 3 : windowHeight * 3 / 5;
+                    content_tris.css('transform', `translate(12%, -${up_distance}px)`)
                     showWorkImgAfter(renge);
                     content_tri.eq(renge).css({
                         'transform': `translateY(${147 + tran_value}%)  
@@ -560,7 +578,8 @@ function animeOnScroll(pageIndex, clicked_page, back_to_menu) {
                     break;
                 case 2:
                     tran_value = value * 5.2 / deciScrollPerTri;
-                    content_tris.css('transform', `translate(12%, -${$(window).height() * 5 / 4}px)`)
+                    const up_distance_scroll = is_sp ? windowHeight * 5 / 4 : windowHeight * 3 / 2;
+                    content_tris.css('transform', `translate(12%, -${up_distance_scroll}px)`)
                     showWorkImgAfter(renge);
                     content_tri.eq(renge).css({
                         'transform': `translateY(${242 + tran_value}%)  
