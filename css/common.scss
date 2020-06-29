@@ -22,6 +22,9 @@ a { cursor: none !important; }
 .underline { border-bottom: 1px solid #fff; }
 .w-90-important { width: 90% !important; }
 .w-100-important { width: 100% !important; }
+.op_delta { opacity: .05; }
+.hover_none { pointer-events: none; }
+.delay_none { transition-delay: 0s !important; }
 
 .cover {
     position: absolute;

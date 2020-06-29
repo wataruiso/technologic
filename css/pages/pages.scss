@@ -106,7 +106,8 @@
 .icon {
     width: 40px;height: 40px;
     transition-duration: 1.2s;
-    path { fill: #fff5; }
+    opacity: .4; 
+    path { fill: #fff; }
 }
 @for $i from 1 through 6 {
     .icon:nth-child(#{$i}) {
@@ -133,19 +134,29 @@
         z-index: -1;
         .icon {width: 60px;height: 60px;}
     }
-    .contact.active .content_inner { 
-        z-index: 1;
-    }
+    .contact.active .content_inner { z-index: 1; }
 
 }
 @media screen and (min-width: 896px) {
-    .section_title { transform: translate(-5%, 15%); }
-    .section_num { transform: translateX(-50%);width: 50% !important; }
-    .works .section_num { width: 45% !important;}
+    .section_title.title_effect { transform: translateY(15%); left: 0;right: auto; }
+    .right_auto_important { right: auto !important; }
+    .active .section_title.title_effect { left: auto !important; }
+    .section_num { transform: translateX(-50%);width: 45% !important; }
     .concept.active .section_num { max-width: 600px;}
+    .works.active .section_num { width: 40% !important;}
+    .contact.active .section_num { width: 65% !important;}
     .leftline {width: 8% !important;}
-    .about .content_inner {
-        bottom: 25%;
+    .about .content_inner { bottom: 25%; }
+    .prefix_number { font-size: 4.8rem; }
+    .works .content_inner { 
+        top: 50%;transform: translateY(-50%); 
+        color: var(--main);
     }
-
+    .contact .content_inner { 
+        flex-flow: row nowrap; 
+        height: 40%;
+        .icon { margin-right:40px;width:80px;height:80px;transform: translateY(-200%); }
+    }
+    .active.contact .icon {transform:none;}
+    .icon:hover { opacity: 1; }
 }

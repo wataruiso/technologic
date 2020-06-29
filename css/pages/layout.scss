@@ -48,9 +48,7 @@
     height: 100%;
     position: fixed;
     will-change: transform;
-    .section_title {
-        transform: translate(-5%, 15%); 
-    }
+    .section_title { transform: translate(-5%, 15%); }
 }
 //active
 
@@ -83,7 +81,6 @@
 //backtomenu
 .back_to_menu {
     right: 0;
-    // background: #ccc3;
     width: 0;
     svg { fill: var(--main-dark); width: 8vw; right: 0; }
 }
@@ -105,7 +102,6 @@
 #stalker {
     --stalker-size: 10px;
     --stalker-position: -5px;
-    pointer-events: none;
     border-radius: 50%;
     width: var(--stalker-size);
     height: var(--stalker-size);

@@ -11,11 +11,13 @@
 //   path.setAttribute('d',pathdata);
 //   poly.parentNode.replaceChild(path,poly);
 // }
-const windowHeight = $(window).height();
-let is_sp = $(window).width() < 896;
-let is_tab = $(window).width() >= 768 && is_sp;
+let windowHeight;
+let windowWidth;
+let is_sp;
+let is_tab;
 
 $(document).ready(function () {
+    setDeviceScale();
     const hueArray = getHue();
     const pages = $('.section');
     setHue(hueArray);
@@ -31,12 +33,21 @@ $(document).ready(function () {
 
 })
 
+function setDeviceScale() {
+    windowHeight = $(window).height();
+    windowWidth = $(window).width();
+    is_sp = windowWidth < 896;
+    is_tab = windowWidth >= 768 && is_sp;
+}
+
 function setHeight(pages) {
-    var section_height = $(window).height() / 4;
+    setDeviceScale();
+    var section_height = windowHeight / 4;
     pages.width(section_height); 
     
     $(window).resize(function(){
-        var section_height = $(window).height() / 4;
+        setDeviceScale();
+        var section_height = windowHeight / 4;
         pages.width(section_height);  
     })
 }
@@ -66,16 +77,17 @@ function openSection(pages) {
         const others = pages.not(this).children();
         const clicked_page = $(this);
         const back_to_menu = $('.back_to_menu');
+        const title_effect = $('.section_title.title_effect', this);
         let pageIndex = clicked_page.index();        
 
         if (clicked_page.hasClass('active')) {
 
-            closeSection(pages, pageIndex, clicked_page, back_to_menu, others);
+            closeSection(pages, pageIndex, clicked_page, back_to_menu, others, title_effect);
 
         } else {    
             $(document).off("click", others);
             others.addClass('hide');
-            openAnime(pageIndex);
+            openAnime(pageIndex, title_effect);
             
             setTimeout(() => {
 
@@ -84,21 +96,25 @@ function openSection(pages) {
 
                 if(pageIndex === 1) setImgBox(clicked_page, 1);
                 else if(pageIndex === 2) setWorkBox(clicked_page, 1);
+                else if(pageIndex === 3) setContactIcon(clicked_page, 1);
                 
             }, 1000);
             
-            backToMenuClick(pages, pageIndex, clicked_page, back_to_menu, others);
+            backToMenuClick(pages, pageIndex, clicked_page, back_to_menu, others, title_effect);
             animeOnScroll(pageIndex, clicked_page, back_to_menu);
         }
         setTimeout(() => { opening = false; }, 1000); 
     })
 }
 
-function closeSection(pages, pageIndex, clicked_page, back_to_menu, others) {
+function closeSection(pages, pageIndex, clicked_page, back_to_menu, others, title_effect) {
     setScroll(clicked_page, 0);
+    title_effect.animate({left: '0'});    
+    setTimeout(() => {title_effect.attr('style', '--word-total:1; --char-total:7');}, 1000); 
     if(pageIndex === 0) resetCharClass(clicked_page);
     else if(pageIndex === 1) setImgBox(clicked_page, 0);
     else if(pageIndex === 2) setWorkBox(clicked_page, 0);
+    else if(pageIndex === 3) setContactIcon(clicked_page, 0);
 
     back_to_menu.removeClass('z100 back_to_menu_active');
     clicked_page.removeClass('active w-100-important w-90-important');
@@ -114,9 +130,9 @@ function closeSection(pages, pageIndex, clicked_page, back_to_menu, others) {
     }, 1000);
 }
 
-function backToMenuClick(pages, pageIndex, clicked_page, back_to_menu, others) {
+function backToMenuClick(pages, pageIndex, clicked_page, back_to_menu, others, title_effect) {
     back_to_menu.on('click', function(e) {
-        closeSection(pages, pageIndex, clicked_page, back_to_menu, others);
+        closeSection(pages, pageIndex, clicked_page, back_to_menu, others, title_effect);
     })
 }
 
@@ -125,6 +141,19 @@ function resetCharClass(clicked_page) {
     const chars = content_inner.find('.char');
     chars.removeClass('show');
     content_inner.find('.txt-sm').addClass('txt-transparent');
+}
+
+function setContactIcon(clicked_page, isEnter) {
+    const icons = clicked_page.find('.content_inner .icon');
+    if(isEnter) {
+        setTimeout(() => {
+            icons.addClass('tran-04 delay_none');
+        }, 1000); 
+    } 
+    else {
+        icons.removeClass('tran-04 delay_none');  
+    }
+    
 }
 
 function animeFromRect() {
@@ -179,13 +208,16 @@ function animeToTriangle() {
 
 function setWorkBox(clicked_page, isEnter) {
     const section_num = clicked_page.find('.section_num');
-    const up_distance = is_sp ? windowHeight * 2 / 3 : windowHeight * 3 / 5;
+    const up_distance = is_sp ? windowHeight * 2 / 3 : windowHeight * 3 / 4 - 60;
+    let workPosX;
+    if(is_sp) workPosX = 12;
+    else workPosX = 5;
 
     const content_tri = $('.works .section_num .content_tri');
     const work_img = $('.work_img');
     const work_img_after = $('.work_img_after');
     if(isEnter) {
-        section_num.css('transform', `translate(12%, -${up_distance}px)`);
+        section_num.css('transform', `translate(${workPosX}%, -${up_distance}px)`);
         work_img.removeClass('dn').addClass('db');
         setTimeout(() => { work_img.addClass('show') }, 1000);
     } 
@@ -201,6 +233,16 @@ function setWorkBox(clicked_page, isEnter) {
             work_img_after.addClass('dn');
         }, 1000);
     }
+
+    const work_triangle = $('.works .section_num .work_triangle');
+    const li = $('.works .content_inner li');
+    work_triangle.hover(function() {        
+        let index = $(this).index();
+        li.eq(index).find('h3').addClass('show');
+    }, function() {
+        let index = $(this).index();
+        li.eq(index).find('h3').removeClass('show');
+    })
 }
 
 function setSections(pages) {
@@ -373,9 +415,9 @@ function closeAnime(index) {
     });
 }
 
-function openAnime(index) {
-
+function openAnime(index, title_effect) {
     setTimeout(() => {
+        title_effect.animate({right: '0'}); 
         if(index === 0) animeToGear();
         if(index === 1) animeToHex();
         if(index === 2) animeToTriangle();
@@ -555,10 +597,14 @@ function animeOnScroll(pageIndex, clicked_page, back_to_menu) {
             let value = scroll % scrollPerTri; 
             let tran_value;
             let rot_value = value * 18 / 150;
+            let workPosX;
+            if(is_sp) workPosX = 12;
+            else workPosX = 5;
 
             switch (renge) {
                 case 0:
                     tran_value = value * 5.2 / deciScrollPerTri;
+                    activeHover(renge);
                     content_tri.eq(renge).css({
                         'transform': `translateY(${95 + tran_value}%)  
                                         rotateX(${180 - rot_value}deg) rotateY(-${180 - rot_value}deg)`,
@@ -567,9 +613,10 @@ function animeOnScroll(pageIndex, clicked_page, back_to_menu) {
                     break;
                 case 1:
                     tran_value = value * 9.5 / deciScrollPerTri;
-                    const up_distance = is_sp ? windowHeight * 2 / 3 : windowHeight * 3 / 5;
-                    content_tris.css('transform', `translate(12%, -${up_distance}px)`)
+                    const up_distance = is_sp ? windowHeight * 2 / 3 : windowHeight * 3 / 4 - 60;
+                    content_tris.css('transform', `translate(${workPosX}%, -${up_distance}px)`)
                     showWorkImgAfter(renge);
+                    activeHover(renge);
                     content_tri.eq(renge).css({
                         'transform': `translateY(${147 + tran_value}%)  
                                         rotateX(${rot_value}deg) rotateY(-${rot_value}deg)`,
@@ -579,8 +626,9 @@ function animeOnScroll(pageIndex, clicked_page, back_to_menu) {
                 case 2:
                     tran_value = value * 5.2 / deciScrollPerTri;
                     const up_distance_scroll = is_sp ? windowHeight * 5 / 4 : windowHeight * 3 / 2;
-                    content_tris.css('transform', `translate(12%, -${up_distance_scroll}px)`)
+                    content_tris.css('transform', `translate(${workPosX}%, -${up_distance_scroll}px)`)
                     showWorkImgAfter(renge);
+                    activeHover(renge);
                     content_tri.eq(renge).css({
                         'transform': `translateY(${242 + tran_value}%)  
                                         rotateX(${180 - rot_value}deg) rotateY(-${180 - rot_value}deg)`,
@@ -590,6 +638,7 @@ function animeOnScroll(pageIndex, clicked_page, back_to_menu) {
                 case 3:
                     tran_value = value * 9.5 / deciScrollPerTri;
                     showWorkImgAfter(renge);
+                    activeHover(renge);
                     content_tri.eq(renge).css({
                         'transform': `translateY(${294 + tran_value}%)  
                                         rotateX(${rot_value}deg) rotateY(-${rot_value}deg)`,
@@ -598,12 +647,17 @@ function animeOnScroll(pageIndex, clicked_page, back_to_menu) {
                     break;
                 case 4:
                     showWorkImgAfter(renge);
+                    activeHover(renge);
                     break;
             }        
             
             function showWorkImgAfter(renge) {
                 content_tri.eq(renge - 1).find('.work_img_after').removeClass('dn op0');
                 content_tri.eq(renge + 1).find('.work_img_after').addClass('prevent');
+            }
+            function activeHover(renge) {
+                if(renge != 0) content_tri.eq(renge - 1).removeClass('hover_none');
+                content_tri.eq(renge).addClass('hover_none');
             }
         }
     })
@@ -616,7 +670,6 @@ function mouseStalk() {
     });
     
     const link_els = document.querySelectorAll('.stalk_on');
-    const click_to_start = document.querySelector('.click_to_start');
     link_els.forEach(link_el => {
         link_el.addEventListener('mouseover', function (e) {
             stalker.classList.add('stalker_hover');
