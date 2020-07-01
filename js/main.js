@@ -593,7 +593,7 @@ function setWorkBox(clicked_page, section_num, isEnter) {
         section_num.removeAttr('style');
         if(is_sp) section_num.css('transform', `translateX(100%) rotateZ(-90deg)`);
         
-        content_tri.attr('style', 'overflow:visible;enable-background:new 0 0 36.8 51;');
+        content_tri.attr('style', 'overflow:visible;enable-background:new 0 0 36.8 51;').addClass('hover_none');
         work_img.removeClass('show');
         work_img_after.addClass('op0');
         setTimeout(() => {
