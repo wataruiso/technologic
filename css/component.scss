@@ -160,6 +160,18 @@
         transform: translateY(-150%);
     }
     .start_box { max-width: 350px; }
+    .contact_content_bottom { 
+        bottom: 0; 
+        .circuit_box {
+            path { fill: none;stroke:var(--main);stroke-width:.5;stroke-miterlimit:10; }
+            circle { fill: var(--main);stroke:none; }
+        }
+        ul {
+            opacity: .2;
+            .icon_shadow { fill: var(--main-dark); }
+        }
+    }
+    .contact.active .circuit_box { opacity: 0.5 !important; }
 }
 
 @media screen and (min-width: 1440px) {

@@ -155,8 +155,12 @@
     .contact .content_inner { 
         flex-flow: row nowrap; 
         height: 40%;
-        .icon { margin-right:40px;width:80px;height:80px;transform: translateY(-200%); }
+        .icon { margin-right: 40px;
+            width:80px;height:80px;
+            transform: translateY(-200%); 
+            opacity: .7;
+        }
     }
     .active.contact .icon {transform:none;}
-    .icon:hover { opacity: 1; }
+    .icon:hover { opacity: 1 !important; }
 }

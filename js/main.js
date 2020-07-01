@@ -258,7 +258,7 @@ function activateSection(pages) {
 
                 if(pageIndex === 1) setImgBox(section_num, 1);
                 else if(pageIndex === 2) setWorkBox(clicked_page, section_num, 1);
-                else if(pageIndex === 3) setContactIcon(icons, 1);
+                else if(pageIndex === 3) setContactIcon(icons, clicked_page, 1);
                 
             }, 1000);
             
@@ -329,7 +329,7 @@ function closeSection(pages, pageIndex, clicked_page, section_num, back_to_menu,
     if(pageIndex === 0) resetCharClass(clicked_page);
     else if(pageIndex === 1) setImgBox(section_num, 0);
     else if(pageIndex === 2) setWorkBox(clicked_page, section_num, 0);
-    else if(pageIndex === 3) setContactIcon(icons, 0);
+    else if(pageIndex === 3) setContactIcon(icons, clicked_page, 0);
 
     back_to_menu.removeClass('z100 back_to_menu_active');
     clicked_page.removeClass('active w-100-important w-90-important');
@@ -602,7 +602,6 @@ function setWorkBox(clicked_page, section_num, isEnter) {
         }, 1000);
     }
 
-
     work_triangle.hover(function() {        
         let index = $(this).index();
         li.eq(index).find('h3').addClass('show');
@@ -630,15 +629,29 @@ function animeToTriangle() {
     });
 }
 //4
-function setContactIcon(icons, isEnter) {
+function setContactIcon(icons, clicked_page, isEnter) {
     if(isEnter) {
-        setTimeout(() => {
-            icons.addClass('tran-04 delay_none');
-        }, 1000); 
+        setTimeout(() => { icons.addClass('tran-04 delay_none'); }, 1000); 
+        anime({
+        targets: '.circuit_box path',
+        strokeDashoffset: [anime.setDashoffset, 0],
+        easing: 'easeInOutSine',
+        duration: 1000,
+        loop: false,
+        delay: 1000,
+        });
     } 
     else {
         icons.removeClass('tran-04 delay_none');  
     }
+    const icon_shadows = clicked_page.find('.icon_shadow');
+    icons.hover(function() {        
+        let index = $(this).index();
+        icon_shadows.eq(index).removeClass('op0');
+    }, function() {
+        let index = $(this).index();
+        icon_shadows.eq(index).addClass('op0');
+    })
     
 }
 function animeFromRect() {
