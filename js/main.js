@@ -70,8 +70,10 @@ function getHue() {
         ['89, 57, 233', '22, 3, 109', '6, 1, 31', '9, 2, 48'],
         ['57, 233, 166', '3, 109, 74', '1, 31, 20', '2, 48, 33'],
         ['233, 57, 180', '109, 3, 95', '31, 1, 26', '48, 2, 40'],
+        ['233, 57, 57', '109, 3, 3', '31, 1, 1', '48, 2, 2'],
+        ['233, 233, 57', '107, 107, 3', '31, 31, 1', '48, 48, 2'],
     ];
-    const hue = hues[Math.floor(Math.random() * 3)];
+    const hue = hues[Math.floor(Math.random() * hues.length)];
     return hue;
 }
 function setHue(hueArray) {
@@ -377,17 +379,21 @@ function animeOnScroll(pageIndex, clicked_page, section_num, content_inner, back
             const big_gear = section_num.find('.big_gear');
             small_gear.css('transform', `translate(${scroll / 700}%, -${scroll / 500}%) rotate(${scroll  / 6.46}deg)`);
             big_gear.css('transform', `rotate(-${scroll / 10}deg)`);
-            const concept_chars = document.querySelectorAll('.char_flash');
-            let point = Math.floor(scroll / 100) - 1;
-            concept_chars.forEach(concept_char => {
-                const total_max = concept_char.style.getPropertyValue("--char-total");
-                if(point >= total_max || point < 0) return;
-                else {
-                const chars = concept_char.getElementsByClassName('char');
-                chars[point].classList.add('show'); 
-                }
+            const chars = document.querySelectorAll('.char_flash .char');
+            const chars_order = [];
+            for (let i = 0; i < chars.length; i++) chars_order.push(i);
+            for(var i = chars.length - 1; i > 0; i--){
+                var r = Math.floor(Math.random() * (i + 1));
+                var tmp = chars_order[i];
+                chars_order[i] = chars_order[r];
+                chars_order[r] = tmp;
+            }            
+            
+            let point = Math.floor(scroll / 500) - 1;            
+            chars_order.forEach((order, index) => {
+                if(point >= index)chars[order].classList.add('show'); 
             })
-            if(point > 20) content_inner.find('.txt-transparent').removeClass('txt-transparent');
+            if(point == 3) content_inner.find('.txt-transparent').removeClass('txt-transparent');
         }
 
         if (pageIndex === 1) {
