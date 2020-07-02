@@ -118,14 +118,14 @@
 .flash { animation: none; }
 
 .active .leftline {
-    polygon { opacity: 1; }
+    polygon { opacity: .8; }
 }
 
 .active.concept, .active.about, .active.works {
     .leftline { filter: url(#leftline_brightness); } 
     .flash { animation: flash .5s infinite alternate; }
     .flash.anid1 { animation-delay: .1s; }
-    .scroll { opacity: 1; }
+    .scroll { opacity: .8; }
 } 
 .active.contact {
     .flash { display: none; }
