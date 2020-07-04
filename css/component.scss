@@ -161,13 +161,16 @@
     }
     .start_box { max-width: 350px; }
     .contact_content_bottom { 
-        bottom: 0; 
+        top: 50%;
+        transform: translateY(-50%);
         .circuit_box {
             path { fill: none;stroke:var(--main);stroke-width:.5;stroke-miterlimit:10; }
             circle { fill: var(--main);stroke:none; }
         }
-        ul {
+        .icon_shadow_box {
             opacity: .2;
+            right: 0;
+            padding-left: -10%;
             .icon_shadow { fill: var(--main-dark); }
         }
     }
