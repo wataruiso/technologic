@@ -394,7 +394,10 @@ function animeOnScroll(pageIndex, clicked_page, section_num, content_inner, back
             chars_order.forEach((order, index) => {
                 if(point >= index)chars[order].classList.add('show'); 
             })
-            if(point == 3) content_inner.find('.txt-transparent').removeClass('txt-transparent');
+            if(point == 3) {
+                content_inner.find('.txt-transparent').removeClass('txt-transparent');
+                content_inner.addClass('white_shadow');
+            }
         }
 
         if (pageIndex === 1) {
@@ -495,6 +498,7 @@ function resetCharClass(clicked_page) {
     const content_inner = clicked_page.find('.content_inner');
     const chars = content_inner.find('.char');
     chars.removeClass('show');
+    content_inner.removeClass('white_shadow');
     content_inner.find('.txt-sm').addClass('txt-transparent');
 }
 function animeFromGear() {

@@ -25,6 +25,11 @@ a { cursor: none !important; }
 .op_delta { opacity: .05; }
 .hover_none { pointer-events: none; }
 .delay_none { transition-delay: 0s !important; }
+.white_shadow { 
+    div, p {
+        text-shadow: 1px 1px 10px #fffc; 
+    }
+}
 
 .cover {
     position: absolute;
