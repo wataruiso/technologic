@@ -3,7 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript">
+        if ((navigator.userAgent.indexOf('iPhone') > 0) || navigator.userAgent.indexOf('iPod') > 0 || navigator.userAgent.indexOf('Android') > 0) {
+                document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
+            }else{
+                document.write('<meta name="viewport" content="width=1280">');
+            }
+    </script>
     <title>Technologic</title>
     <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" href="css/common.css">
