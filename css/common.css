@@ -167,7 +167,7 @@ a {
 
 @media screen and (min-width: 896px) {
   .pl-90 {
-    padding-left: 230px !important;
+    padding-left: calc(200px + 10%) !important;
   }
 }
 /*# sourceMappingURL=common.css.map */

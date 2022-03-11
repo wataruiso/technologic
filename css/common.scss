@@ -61,5 +61,5 @@ a { cursor: none !important; }
 .w-90-important { width: 92% !important; }
 }
 @media screen and (min-width: 896px) {
-.pl-90 {padding-left: 230px !important;}
+.pl-90 {padding-left: calc(200px + 10%) !important;}
 }
