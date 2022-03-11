@@ -43,8 +43,9 @@
 .contact {
     .active_none { transform: translateX(115%); }
     .content_inner {
+        $icon_nums: 4;
         flex-flow: column nowrap;
-        height: 50%; margin: auto; top: 25%;
+        height: $icon_nums * 7.5%; margin: auto; top: 25%;
     }
 }
 .icon { transform: translateX(-350%); }
