@@ -3,12 +3,16 @@ html, body {
     height: 100%;
     color: #fff;
     font-family: 'Electrolize', sans-serif;
+    //iphone表示崩れ対策
+    -webkit-appearance: none !important;
+    -webkit-text-size-adjust:100%;
 }
 a { cursor: none !important; }
 .nicescroll-cursors { cursor: none; }
 
 .tran1 { transition: 1s; }
 .z-20 { z-index: 20; }
+.z-100 { z-index: 100; }
 .txt-sm { font-size: .65rem; }
 .to-lt { transform-origin: left top; }
 .bdbx { box-sizing: border-box; }
