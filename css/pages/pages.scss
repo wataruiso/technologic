@@ -160,6 +160,7 @@
             width:80px;height:80px;
             transform: translateY(-200%); 
             opacity: .7;
+            &.disabled { pointer-events: none; opacity: .2; } //disabledクラス付与アイテムはホバーイベントを消す
         }
     }
     .active.contact .icon {transform:none;}

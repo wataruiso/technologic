@@ -406,6 +406,10 @@
             transform: translateY(-200%);
     opacity: .7;
   }
+  .contact .content_inner .icon.disabled {
+    pointer-events: none;
+    opacity: .2;
+  }
   .active.contact .icon {
     -webkit-transform: none;
             transform: none;
